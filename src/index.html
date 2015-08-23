@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <title>Todo Angular ES6</title>
+
+  <link rel="stylesheet" href="">
+</head>
+
+
+<body>
+  <header></header>
+
+
+  <main class="main" ui-view></main>
+
+
+  <script src="./lib/angular.min.js"></script>
+  <script src="./lib/angular-aria.min.js"></script>
+  <script src="./lib/angular-ui-router.min.js"></script>
+  <script src="./lib/angular-storage.min.js"></script>
+  <script src="./lib/external-helpers.min.js"></script>
+  <script src="./lib/es6-module-loader.js"></script>
+  <script src="./lib/system.js"></script>
+  <script src="./lib/fastclick.js"></script>
+  <script src="./app-templates.js"></script>
+  <!-- inject:js -->
+  <!-- endinject -->
+  <script>
+    System.config({
+      defaultJSExtensions: true
+    });
+
+    System.import('app/app.js');
+
+    if ('addEventListener' in document) {
+      document.addEventListener('DOMContentLoaded', function(){
+        FastClick.attach(document.body);
+      }, false);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<div
+  ng-controller="TaskItemController as taskItem"
+  ng-repeat="task in taskList.tasks | taskStatus:state.params.status track by $index">
+
+  <input
+    ng-change="taskItem.toggleCompleted()"
+    ng-model="task.completed"
+    type="checkbox">
+
+  <span ng-hide="taskItem.editing">{{ task.title }}</span>
+
+  <form ng-show="taskItem.editing" ng-submit="taskItem.save()">
+    <input
+      escape="taskItem.cancelEdit()"
+      name="taskTitle"
+      ng-blur="taskItem.save()"
+      ng-model="taskItem.title"
+      required
+      type="text">
+  </form>
+
+  <button ng-click="taskItem.edit()" type="button">Edit</button>
+  <button ng-click="taskItem.delete(task)" type="button">Delete</button>
+
+</div>
