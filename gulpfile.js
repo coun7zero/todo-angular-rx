@@ -86,7 +86,7 @@ var config = {
   inject: {
     src: 'target/index.html',
     includes: [
-      'target/app.js'
+      'target/main.js'
     ],
     options: {relative: true}
   },
@@ -105,8 +105,8 @@ var config = {
   },
 
   systemBuilder: {
-    entry: 'app/app.js',
-    outfile: paths.target + '/app.js',
+    entry: 'app/main.js',
+    outfile: paths.target + '/main.js',
     options: {
       minify: true,
       sourceMaps: true

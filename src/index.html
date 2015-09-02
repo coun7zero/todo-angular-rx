@@ -12,15 +12,15 @@
 
 
 <body ui-view>
-  <script src="./lib/angular.min.js"></script>
-  <script src="./lib/angular-aria.min.js"></script>
-  <script src="./lib/angular-ui-router.min.js"></script>
-  <script src="./lib/angular-storage.min.js"></script>
-  <script src="./lib/external-helpers.min.js"></script>
-  <script src="./lib/es6-module-loader.js"></script>
-  <script src="./lib/system.js"></script>
-  <script src="./lib/fastclick.js"></script>
-  <script src="./app-templates.js"></script>
+  <script src="lib/angular.min.js"></script>
+  <script src="lib/angular-aria.min.js"></script>
+  <script src="lib/angular-ui-router.min.js"></script>
+  <script src="lib/angular-storage.min.js"></script>
+  <script src="lib/external-helpers.min.js"></script>
+  <script src="lib/es6-module-loader.js"></script>
+  <script src="lib/system.js"></script>
+  <script src="lib/fastclick.js"></script>
+  <script src="app-templates.js"></script>
   <!-- inject:js -->
   <!-- endinject -->
   <script>
@@ -28,7 +28,7 @@
       defaultJSExtensions: true
     });
 
-    System.import('app/app.js');
+    System.import('app/main');
 
     if ('addEventListener' in document) {
       document.addEventListener('DOMContentLoaded', function(){

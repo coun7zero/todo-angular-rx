@@ -1,5 +1,5 @@
-import { API_TYPE } from 'config/api';
-import { LOCAL_STORAGE_KEY } from 'config/local-storage';
+import { API_TYPE } from './config/api';
+import { LOCAL_STORAGE_KEY } from './config/local-storage';
 import LocalStorageApi from './core/api/local-storage-api';
 import ServerApi from './core/api/server-api';
 import { stateConfig } from './core/state/state-config';
