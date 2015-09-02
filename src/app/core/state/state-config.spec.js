@@ -1,5 +1,5 @@
 import { stateConfig } from './state-config';
-import * as taskStatus from 'app/constants/task-status';
+import Task from 'app/core/task/task';
 
 
 describe('stateConfig', () => {
@@ -27,13 +27,13 @@ describe('stateConfig', () => {
   describe('`tasks.filtered` state', () => {
     describe('with status: `active`', () => {
       it('should transition to `tasks.filtered` state', inject(($rootScope, $state) => {
-        $state.go('tasks.filtered', {status: taskStatus.ACTIVE});
+        $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
         $rootScope.$digest();
         expect($state.current.name).toBe('tasks.filtered');
       }));
 
       it('should set param `status` to `active`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('tasks.filtered', {status: taskStatus.ACTIVE});
+        $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
         $rootScope.$digest();
         expect($stateParams.status).toBe('active');
       }));
@@ -41,13 +41,13 @@ describe('stateConfig', () => {
 
     describe('with status: `completed`', () => {
       it('should transition to `tasks.filtered` state', inject(($rootScope, $state) => {
-        $state.go('tasks.filtered', {status: taskStatus.COMPLETED});
+        $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
         $rootScope.$digest();
         expect($state.current.name).toBe('tasks.filtered');
       }));
 
       it('should set param `status` to `completed`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('tasks.filtered', {status: taskStatus.COMPLETED});
+        $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
         $rootScope.$digest();
         expect($stateParams.status).toBe('completed');
       }));

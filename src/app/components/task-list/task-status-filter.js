@@ -1,9 +1,9 @@
-export const taskStatusFilter = ['taskStatus', (taskStatus) => {
+export const taskStatusFilter = ['Task', (Task) => {
 
   return (taskList, status) => {
-    if (!status || !taskStatus.VALID[status]) return taskList;
+    if (!status) return taskList;
 
-    const completed = status === taskStatus.COMPLETED;
+    const completed = status === Task.STATUS_COMPLETED;
 
     return taskList.filter((task) => {
       return task.completed === completed;

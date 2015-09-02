@@ -1,24 +1,25 @@
 import Inject from 'app/core/decorators/inject';
 
 
-@Inject('$state', '$stateParams', 'taskStatus') // eslint-disable-line new-cap
+@Inject('$state', '$stateParams', 'Task') // eslint-disable-line new-cap
 
 export default class StateService {
-  constructor($state, $stateParams, taskStatus) {
+  constructor($state, $stateParams, Task) {
     this.state = $state;
     this.params = $stateParams;
-    this.taskStatus = taskStatus;
+    this.STATUS_ACTIVE = Task.STATUS_ACTIVE;
+    this.STATUS_COMPLETED = Task.STATUS_COMPLETED;
   }
 
   isActiveTasks() {
-    return this.state.is('tasks.filtered', {status: this.taskStatus.ACTIVE});
+    return this.state.is('tasks.filtered', {status: this.STATUS_ACTIVE});
   }
 
   /**
    * @returns {boolean}
    */
   isCompletedTasks() {
-    return this.state.is('tasks.filtered', {status: this.taskStatus.COMPLETED});
+    return this.state.is('tasks.filtered', {status: this.STATUS_COMPLETED});
   }
 
   /**
@@ -30,23 +31,23 @@ export default class StateService {
 
   /**
    * @async
-   * @returns {promise}
+   * @returns $state.current
    */
   toActiveTasks() {
-    return this.state.go('tasks.filtered', {status: this.taskStatus.ACTIVE});
+    return this.state.go('tasks.filtered', {status: this.STATUS_ACTIVE});
   }
 
   /**
    * @async
-   * @returns {promise}
+   * @returns $state.current
    */
   toCompletedTasks() {
-    return this.state.go('tasks.filtered', {status: this.taskStatus.COMPLETED});
+    return this.state.go('tasks.filtered', {status: this.STATUS_COMPLETED});
   }
 
   /**
    * @async
-   * @returns {promise}
+   * @returns $state.current
    */
   toTasks() {
     return this.state.go('tasks.all');

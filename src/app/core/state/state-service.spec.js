@@ -1,13 +1,13 @@
 import { stateConfig } from './state-config';
 import StateService from './state-service';
-import * as taskStatus from 'app/constants/task-status';
+import Task from 'app/core/task/task';
 
 
 describe('StateService', () => {
 
   beforeEach(() => {
     angular.module('test', ['ui.router', 'app.templates'])
-      .constant('taskStatus', taskStatus)
+      .value('Task', Task)
       .service('stateService', StateService)
       .controller('TaskFormController', () => {})
       .controller('TaskListController', () => {})
@@ -18,14 +18,14 @@ describe('StateService', () => {
 
 
   describe('#isActiveTasks()', () => {
-    it('should return true if current state matches', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.filtered', {status: taskStatus.ACTIVE});
+    it('should return true if current state matches', inject(($rootScope, $state, stateService, Task) => {
+      $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
       $rootScope.$digest();
       expect(stateService.isActiveTasks()).toBe(true);
     }));
 
-    it('should return false if current does not match', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.filtered', {status: taskStatus.COMPLETED});
+    it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
+      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isActiveTasks()).toBe(false);
     }));
@@ -33,14 +33,14 @@ describe('StateService', () => {
 
 
   describe('#isCompletedTasks()', () => {
-    it('should return true if current state matches', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.filtered', {status: taskStatus.COMPLETED});
+    it('should return true if current state matches', inject(($rootScope, $state, stateService, Task) => {
+      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isCompletedTasks()).toBe(true);
     }));
 
-    it('should return false if current does not match', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.filtered', {status: taskStatus.ACTIVE});
+    it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
+      $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
       $rootScope.$digest();
       expect(stateService.isCompletedTasks()).toBe(false);
     }));
@@ -54,8 +54,8 @@ describe('StateService', () => {
       expect(stateService.isTasks()).toBe(true);
     }));
 
-    it('should return false if current does not match', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.filtered', {status: taskStatus.COMPLETED});
+    it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
+      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isTasks()).toBe(false);
     }));
@@ -63,37 +63,37 @@ describe('StateService', () => {
 
 
   describe('#toActiveTasks()', () => {
-    it('should go to requested state', inject(($rootScope, $state, $stateParams, stateService) => {
+    it('should go to requested state', inject(($rootScope, $state, $stateParams, stateService, Task) => {
       stateService.toActiveTasks();
       $rootScope.$digest();
 
       expect($state.current.name).toBe('tasks.filtered');
-      expect($stateParams.status).toBe(taskStatus.ACTIVE);
+      expect($stateParams.status).toBe(Task.STATUS_ACTIVE);
     }));
 
-    it('should set `params.status` to `active`', inject(($rootScope, $state, $stateParams, stateService) => {
+    it('should set `params.status` to `active`', inject(($rootScope, $state, $stateParams, stateService, Task) => {
       stateService.toActiveTasks();
       $rootScope.$digest();
 
-      expect(stateService.params.status).toBe(taskStatus.ACTIVE);
+      expect(stateService.params.status).toBe(Task.STATUS_ACTIVE);
     }));
   });
 
 
   describe('#toCompletedTasks()', () => {
-    it('should go to requested state', inject(($rootScope, $state, $stateParams, stateService) => {
+    it('should go to requested state', inject(($rootScope, $state, $stateParams, stateService, Task) => {
       stateService.toCompletedTasks();
       $rootScope.$digest();
 
       expect($state.current.name).toBe('tasks.filtered');
-      expect($stateParams.status).toBe(taskStatus.COMPLETED);
+      expect($stateParams.status).toBe(Task.STATUS_COMPLETED);
     }));
 
-    it('should set `params.status` to `completed`', inject(($rootScope, $state, $stateParams, stateService) => {
+    it('should set `params.status` to `completed`', inject(($rootScope, $state, $stateParams, stateService, Task) => {
       stateService.toCompletedTasks();
       $rootScope.$digest();
 
-      expect(stateService.params.status).toBe(taskStatus.COMPLETED);
+      expect(stateService.params.status).toBe(Task.STATUS_COMPLETED);
     }));
   });
 

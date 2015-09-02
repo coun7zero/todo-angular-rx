@@ -55,7 +55,7 @@ var paths = {
 var config = {
   babel: {
     modules: 'system',
-    stage: 1
+    stage: 0
   },
 
   browserSync: {
