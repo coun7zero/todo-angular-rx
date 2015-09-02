@@ -6,6 +6,7 @@ import { stateConfig } from './core/state/state-config';
 import StateService from './core/state/state-service';
 import Task from './core/task/task';
 import TaskService from './core/task/task-service';
+import App from './components/app/app';
 import TaskForm from './components/task-form/task-form';
 import TaskItem from './components/task-item/task-item';
 import TaskList from './components/task-list/task-list';
@@ -49,6 +50,12 @@ const app = angular
   -----------------------------------*/
   .value('Task', Task)
   .service('TaskService', TaskService)
+
+
+  /*===================================
+    App component
+  -----------------------------------*/
+  .controller('AppController', App)
 
 
   /*===================================

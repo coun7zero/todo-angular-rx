@@ -19,13 +19,13 @@ describe('StateService', () => {
 
   describe('#isActiveTasks()', () => {
     it('should return true if current state matches', inject(($rootScope, $state, stateService, Task) => {
-      $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
+      $state.go('app.tasks.filtered', {status: Task.STATUS_ACTIVE});
       $rootScope.$digest();
       expect(stateService.isActiveTasks()).toBe(true);
     }));
 
     it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
-      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
+      $state.go('app.tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isActiveTasks()).toBe(false);
     }));
@@ -34,13 +34,13 @@ describe('StateService', () => {
 
   describe('#isCompletedTasks()', () => {
     it('should return true if current state matches', inject(($rootScope, $state, stateService, Task) => {
-      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
+      $state.go('app.tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isCompletedTasks()).toBe(true);
     }));
 
     it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
-      $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
+      $state.go('app.tasks.filtered', {status: Task.STATUS_ACTIVE});
       $rootScope.$digest();
       expect(stateService.isCompletedTasks()).toBe(false);
     }));
@@ -49,13 +49,13 @@ describe('StateService', () => {
 
   describe('#isTasks()', () => {
     it('should return true if current state matches', inject(($rootScope, $state, stateService) => {
-      $state.go('tasks.all');
+      $state.go('app.tasks');
       $rootScope.$digest();
       expect(stateService.isTasks()).toBe(true);
     }));
 
     it('should return false if current does not match', inject(($rootScope, $state, stateService, Task) => {
-      $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
+      $state.go('app.tasks.filtered', {status: Task.STATUS_COMPLETED});
       $rootScope.$digest();
       expect(stateService.isTasks()).toBe(false);
     }));
@@ -67,7 +67,7 @@ describe('StateService', () => {
       stateService.toActiveTasks();
       $rootScope.$digest();
 
-      expect($state.current.name).toBe('tasks.filtered');
+      expect($state.current.name).toBe('app.tasks.filtered');
       expect($stateParams.status).toBe(Task.STATUS_ACTIVE);
     }));
 
@@ -85,7 +85,7 @@ describe('StateService', () => {
       stateService.toCompletedTasks();
       $rootScope.$digest();
 
-      expect($state.current.name).toBe('tasks.filtered');
+      expect($state.current.name).toBe('app.tasks.filtered');
       expect($stateParams.status).toBe(Task.STATUS_COMPLETED);
     }));
 
@@ -103,7 +103,7 @@ describe('StateService', () => {
       stateService.toTasks();
       $rootScope.$digest();
 
-      expect($state.current.name).toBe('tasks.all');
+      expect($state.current.name).toBe('app.tasks');
       expect($stateParams.status).not.toBeDefined();
     }));
 

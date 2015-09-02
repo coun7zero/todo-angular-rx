@@ -6,8 +6,9 @@ describe('stateConfig', () => {
 
   beforeEach(() => {
     angular.module('test', ['ui.router', 'app.templates'])
-      .controller('TaskFormController', () => {})
-      .controller('TaskListController', () => {})
+      .controller('AppController', angular.noop)
+      .controller('TaskFormController', angular.noop)
+      .controller('TaskListController', angular.noop)
       .config(stateConfig);
 
     angular.mock.module('test');
@@ -16,38 +17,38 @@ describe('stateConfig', () => {
 
   describe('`tasks` state', () => {
     it('should transition to `tasks` state', inject(($rootScope, $state) => {
-      $state.go('tasks.all');
+      $state.go('app.tasks');
       $rootScope.$digest();
 
-      expect($state.current.name).toBe('tasks.all');
+      expect($state.current.name).toBe('app.tasks');
     }));
   });
 
 
-  describe('`tasks.filtered` state', () => {
+  describe('`app.tasks.filtered` state', () => {
     describe('with status: `active`', () => {
-      it('should transition to `tasks.filtered` state', inject(($rootScope, $state) => {
-        $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
+      it('should transition to `app.tasks.filtered` state', inject(($rootScope, $state) => {
+        $state.go('app.tasks.filtered', {status: Task.STATUS_ACTIVE});
         $rootScope.$digest();
-        expect($state.current.name).toBe('tasks.filtered');
+        expect($state.current.name).toBe('app.tasks.filtered');
       }));
 
       it('should set param `status` to `active`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('tasks.filtered', {status: Task.STATUS_ACTIVE});
+        $state.go('app.tasks.filtered', {status: Task.STATUS_ACTIVE});
         $rootScope.$digest();
         expect($stateParams.status).toBe('active');
       }));
     });
 
     describe('with status: `completed`', () => {
-      it('should transition to `tasks.filtered` state', inject(($rootScope, $state) => {
-        $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
+      it('should transition to `app.tasks.filtered` state', inject(($rootScope, $state) => {
+        $state.go('app.tasks.filtered', {status: Task.STATUS_COMPLETED});
         $rootScope.$digest();
-        expect($state.current.name).toBe('tasks.filtered');
+        expect($state.current.name).toBe('app.tasks.filtered');
       }));
 
       it('should set param `status` to `completed`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('tasks.filtered', {status: Task.STATUS_COMPLETED});
+        $state.go('app.tasks.filtered', {status: Task.STATUS_COMPLETED});
         $rootScope.$digest();
         expect($stateParams.status).toBe('completed');
       }));
@@ -55,9 +56,9 @@ describe('stateConfig', () => {
 
     describe('with invalid `status` param', () => {
       it('should transition to default `tasks` state', inject(($rootScope, $state) => {
-        $state.go('tasks.filtered', {status: 'foo'});
+        $state.go('app.tasks.filtered', {status: 'foo'});
         $rootScope.$digest();
-        expect($state.current.name).toBe('tasks.all');
+        expect($state.current.name).toBe('app.tasks');
       }));
     });
   });

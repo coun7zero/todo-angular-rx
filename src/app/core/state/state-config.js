@@ -1,38 +1,45 @@
 export const stateConfig = ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
-  const taskListView = {
-    'list@tasks': {
-      controller: 'TaskListController as taskList',
-      templateUrl: 'task-list/task-list.html'
-    }
-  };
-
-
   $stateProvider
     .state({
       abstract: true,
-      name: 'tasks',
+      name: 'app',
       views: {
         '': {
-          templateUrl: 'tasks/tasks.html'
-        },
-
-        'form@tasks': {
-          controller: 'TaskFormController as taskForm',
-          templateUrl: 'task-form/task-form.html'
+          controller: 'AppController as app',
+          templateUrl: 'app/app.html'
         }
       }
     })
 
     .state({
-      name: 'tasks.all',
+      name: 'app.tasks',
       url: '/tasks',
-      views: taskListView
+      views: {
+        'main@app': {
+          templateUrl: 'tasks/tasks.html'
+        },
+
+        'form@app.tasks': {
+          controller: 'TaskFormController as taskForm',
+          templateUrl: 'task-form/task-form.html'
+        },
+
+        'list@app.tasks': {
+          controller: 'TaskListController as taskList',
+          templateUrl: 'task-list/task-list.html'
+        }
+      }
     })
 
     .state({
-      name: 'tasks.filtered',
-      url: '/tasks/{status:active|completed}',
-      views: taskListView
+      name: 'app.tasks.filtered',
+      url: '/{status:active|completed}',
+      views: {
+        'list@tasks': {
+          controller: 'TaskListController as taskList',
+          templateUrl: 'task-list/task-list.html'
+        }
+      }
     });
 
 
