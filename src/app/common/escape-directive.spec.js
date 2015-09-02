@@ -1,5 +1,4 @@
 import { escapeDirective } from './escape-directive';
-import * as keyCodes from 'app/constants/key-codes';
 
 
 describe('escape directive', () => {
@@ -10,7 +9,6 @@ describe('escape directive', () => {
   beforeEach(() => {
     angular
       .module('test', [])
-      .constant('keyCodes', keyCodes)
       .directive('escape', escapeDirective);
 
     angular.mock.module('test');
@@ -25,26 +23,26 @@ describe('escape directive', () => {
   });
 
 
-  function triggerKeyup(element, keyCode) {
+  function triggerKeyup() {
     let event = new Event('keyup');
-    event.keyCode = keyCode;
+    event.keyCode = 27;
     element[0].dispatchEvent(event);
   }
 
 
   it('should call handler function when escape key is released (keyup event)', () => {
-    triggerKeyup(element, keyCodes.ESCAPE);
+    triggerKeyup();
     expect(scope.escapeHandler.callCount).toBe(1);
   });
 
 
   it('should unbind from `keyup` event when scope is destroyed', () => {
-    triggerKeyup(element, keyCodes.ESCAPE);
+    triggerKeyup();
     expect(scope.escapeHandler.callCount).toBe(1);
 
     scope.$destroy();
 
-    triggerKeyup(element, keyCodes.ESCAPE);
+    triggerKeyup();
     expect(scope.escapeHandler.callCount).toBe(1);
   });
 

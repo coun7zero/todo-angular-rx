@@ -1,4 +1,3 @@
-import * as keyCodes from './constants/key-codes';
 import { apiType } from './constants/api';
 import { LOCAL_STORAGE_KEY } from './constants/local-storage';
 import * as taskStatus from './constants/task-status';
@@ -29,7 +28,6 @@ const app = angular
     Constants
   -----------------------------------*/
   .constant('apiType', apiType)
-  .constant('keyCodes', keyCodes)
   .constant('localStorageKey', LOCAL_STORAGE_KEY)
   .constant('taskStatus', taskStatus)
 
