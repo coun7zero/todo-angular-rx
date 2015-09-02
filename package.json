@@ -18,7 +18,8 @@
     "angular-ui-router": "^0.2.15",
     "es6-module-loader": "^0.17.6",
     "fastclick": "^1.0.6",
-    "systemjs": "^0.18.17"
+    "systemjs": "^0.18.17",
+    "todo-server": "r-park/todo-server.git"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.5",

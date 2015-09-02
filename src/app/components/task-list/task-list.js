@@ -8,6 +8,7 @@ export default class TaskList {
     $scope.state = stateService;
 
     this.taskService = taskService;
+    this.tasks = [];
 
     taskService.getTasks().then(() => {
       this.tasks = taskService.tasks;

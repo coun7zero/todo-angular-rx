@@ -1,4 +1,5 @@
-var assign        = require('object-assign'),
+var apiServer     = require('todo-server'),
+    assign        = require('object-assign'),
     babel         = require('gulp-babel'),
     browserSync   = require('browser-sync'),
     Builder       = require('systemjs-builder'),
@@ -251,6 +252,12 @@ gulp.task('server', function(done){
   browserSync
     .create()
     .init(config.browserSync, done);
+});
+
+
+gulp.task('server.api', function(done){
+  apiServer.start();
+  done();
 });
 
 
