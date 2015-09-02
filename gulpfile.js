@@ -4,6 +4,7 @@ var assign        = require('object-assign'),
     Builder       = require('systemjs-builder'),
     del           = require('del'),
     eslint        = require('gulp-eslint'),
+    exec          = require('child_process').exec,
     gulp          = require('gulp'),
     gutil         = require('gulp-util'),
     header        = require('gulp-header'),
@@ -131,8 +132,8 @@ config.system = {
 /*=========================================================
   TASKS
 ---------------------------------------------------------*/
-gulp.task('clean.target', function(done){
-  del(paths.target, done);
+gulp.task('clean.target', function(){
+  return del(paths.target);
 });
 
 
@@ -206,6 +207,37 @@ gulp.task('js.bundle', function(done){
 });
 
 
+gulp.task('karma', function(done){
+  var conf = assign({}, config.karma, {singleRun: true});
+  var server = new KarmaServer(conf, function(error){
+    if (error) process.exit(error);
+    else done();
+  });
+
+  server.start();
+});
+
+
+gulp.task('karma.run', function(done){
+  var cmd = process.platform === 'win32' ? 'node_modules\\.bin\\karma run karma.conf.js' : 'node node_modules/.bin/karma run karma.conf.js';
+  exec(cmd, function(error, stdout){
+    // Ignore errors in the interactive (non-ci) mode.
+    // Karma server will print all test failures.
+    done();
+  });
+});
+
+
+gulp.task('karma.watch', function(done){
+  var server = new KarmaServer(config.karma, function(error){
+    if (error) process.exit(error);
+    else done();
+  });
+
+  server.start();
+});
+
+
 gulp.task('lint', function(){
   return gulp
     .src(config.eslint.src)
@@ -231,39 +263,14 @@ gulp.task('templates', function(){
 });
 
 
-gulp.task('test', gulp.series('lint', 'clean.target', 'js', function karma(done){
-  var conf = assign({}, config.karma, {singleRun: true});
-  var server = new KarmaServer(conf, function(error){
-    if (error) process.exit(error);
-    else done();
-  });
-
-  server.start();
-}));
+gulp.task('test', gulp.series('lint', 'clean.target', 'js', 'karma'));
 
 
-gulp.task('test.run', function(done){
-  var cmd = process.platform === 'win32' ? 'node_modules\\.bin\\karma run karma.conf.js' : 'node node_modules/.bin/karma run karma.conf.js';
-  exec(cmd, function(error, stdout){
-    // Ignore errors in the interactive (non-ci) mode.
-    // Karma server will print all test failures.
-    done();
-  });
-});
-
-
-gulp.task('test.watch', gulp.series('lint', 'clean.target', 'js', function testWatch(done){
-  var server = new KarmaServer(config.karma, function(error){
-    if (error) process.exit(error);
-    else done();
-  });
-
-  server.start();
-}));
+gulp.task('test.watch', gulp.series('lint', 'clean.target', 'js', 'karma.watch'));
 
 
 gulp.task('tdd', function(){
-  gulp.watch(paths.src.js, gulp.series('js', 'test.run'));
+  gulp.watch(paths.src.js, gulp.series('js', 'karma.run'));
 });
 
 
