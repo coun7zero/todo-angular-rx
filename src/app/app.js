@@ -1,5 +1,5 @@
-import { apiType } from './constants/api';
-import { LOCAL_STORAGE_KEY } from './constants/local-storage';
+import { API_TYPE } from 'config/api';
+import { LOCAL_STORAGE_KEY } from 'config/local-storage';
 import LocalStorageApi from './core/api/local-storage-api';
 import ServerApi from './core/api/server-api';
 import { stateConfig } from './core/state/state-config';
@@ -27,7 +27,7 @@ const app = angular
   /*===================================
     Constants
   -----------------------------------*/
-  .constant('apiType', apiType)
+  .constant('apiType', API_TYPE)
   .constant('localStorageKey', LOCAL_STORAGE_KEY)
 
 
