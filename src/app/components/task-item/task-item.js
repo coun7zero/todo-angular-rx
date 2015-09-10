@@ -34,6 +34,7 @@ export default class TaskItem {
   }
 
   toggleCompleted() {
+    this.scope.task.completed = !this.scope.task.completed;
     this.taskService.updateTask(this.scope.task);
   }
 }
