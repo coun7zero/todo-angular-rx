@@ -1,5 +1,4 @@
-var apiServer     = require('todo-server'),
-    assign        = require('object-assign'),
+var assign        = require('object-assign'),
     babel         = require('gulp-babel'),
     browserSync   = require('browser-sync'),
     Builder       = require('systemjs-builder'),
@@ -14,7 +13,8 @@ var apiServer     = require('todo-server'),
     minifyHtml    = require('gulp-minify-html'),
     path          = require('path'),
     sourceMaps    = require('gulp-sourcemaps'),
-    templateCache = require('gulp-angular-templatecache');
+    templateCache = require('gulp-angular-templatecache'),
+    todoServer    = require('todo-server');
 
 
 /*=========================================================
@@ -115,10 +115,10 @@ var config = {
 
   templateCache: {
     options: {
-      module: 'app.templates',
+      module: 'templates',
       standalone: true
     },
-    outfile: 'app-templates.js'
+    outfile: 'templates.js'
   }
 };
 
@@ -256,7 +256,7 @@ gulp.task('server', function(done){
 
 
 gulp.task('server.api', function(done){
-  apiServer.start();
+  todoServer.start();
   done();
 });
 

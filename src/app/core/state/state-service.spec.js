@@ -6,7 +6,7 @@ import Task from 'app/core/task/task';
 describe('StateService', () => {
 
   beforeEach(() => {
-    angular.module('test', ['ui.router', 'app.templates'])
+    angular.module('test', ['ui.router', 'templates'])
       .value('Task', Task)
       .service('stateService', StateService)
       .controller('TaskFormController', () => {})

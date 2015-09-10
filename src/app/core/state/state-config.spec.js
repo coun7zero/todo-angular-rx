@@ -5,7 +5,7 @@ import Task from 'app/core/task/task';
 describe('stateConfig', () => {
 
   beforeEach(() => {
-    angular.module('test', ['ui.router', 'app.templates'])
+    angular.module('test', ['ui.router', 'templates'])
       .controller('AppController', angular.noop)
       .controller('TaskFormController', angular.noop)
       .controller('TaskListController', angular.noop)

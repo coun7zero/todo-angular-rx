@@ -42,7 +42,7 @@ module.exports = function(config) {
 
     // additional options for karma-ng-html2js-preprocessor
     ngHtml2JsPreprocessor: {
-      moduleName: 'app.templates',
+      moduleName: 'templates',
       stripPrefix: 'src/app/components/'
     },
 
@@ -77,7 +77,7 @@ module.exports = function(config) {
 
     // custom launcher for travis-ci
     customLaunchers: {
-      Chrome_travis_ci: {
+      TRAVIS_CHROME: {
         base: 'Chrome',
         flags: ['--no-sandbox']
       }
@@ -86,7 +86,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: process.env.TRAVIS ? ['Chrome_travis_ci'] : ['Chrome']
+    browsers: process.env.TRAVIS ? ['TRAVIS_CHROME'] : ['Chrome']
 
   });
 };

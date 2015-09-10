@@ -20,7 +20,7 @@ const app = angular
     'angular-storage',
     'ngAria',
     'ui.router',
-    'app.templates'
+    'templates'
   ])
 
 
