@@ -1,4 +1,5 @@
 var assign        = require('object-assign'),
+    autoprefixer  = require('autoprefixer'),
     babel         = require('gulp-babel'),
     browserSync   = require('browser-sync'),
     Builder       = require('systemjs-builder'),
@@ -11,6 +12,8 @@ var assign        = require('object-assign'),
     inject        = require('gulp-inject'),
     KarmaServer   = require('karma').Server,
     minifyHtml    = require('gulp-minify-html'),
+    postcss       = require('gulp-postcss'),
+    sass          = require('gulp-sass'),
     path          = require('path'),
     sourceMaps    = require('gulp-sourcemaps'),
     templateCache = require('gulp-angular-templatecache'),
@@ -42,6 +45,7 @@ var paths = {
     assets: 'src/assets/**/*',
     html: 'src/*.html',
     js: 'src/**/*.js',
+    sass: 'src/styles/**/*.scss',
     tpl: 'src/app/components/**/*.html'
   },
 
@@ -53,6 +57,10 @@ var paths = {
   CONFIG
 ---------------------------------------------------------*/
 var config = {
+  autoprefixer: {
+    browsers: ['last 3 versions', 'Firefox ESR', 'Opera 12.1']
+  },
+
   babel: {
     modules: 'system',
     stage: 0
@@ -102,6 +110,13 @@ var config = {
     empty: true,
     quotes: true,
     spare: false
+  },
+
+  sass: {
+    errLogToConsole: true,
+    outputStyle: DIST ? 'compressed' : 'nested',
+    precision: 10,
+    sourceComments: false
   },
 
   systemBuilder: {
@@ -248,6 +263,17 @@ gulp.task('lint', function(){
 });
 
 
+gulp.task('sass', function(){
+  return gulp
+    .src(paths.src.sass)
+    .pipe(sass(config.sass))
+    .pipe(postcss([
+      autoprefixer(config.autoprefixer)
+    ]))
+    .pipe(gulp.dest(paths.target));
+});
+
+
 gulp.task('server', function(done){
   browserSync
     .create()
@@ -286,6 +312,7 @@ gulp.task('build', gulp.series(
   'copy.assets',
   'copy.html',
   'copy.lib',
+  'sass',
   DIST ? 'js.bundle' : 'js',
   'templates'
 ));
@@ -294,6 +321,7 @@ gulp.task('build', gulp.series(
 gulp.task('default', gulp.series('build', function watch(){
   gulp.watch(paths.src.assets, gulp.task('copy.assets'));
   gulp.watch(paths.src.html, gulp.task('copy.html'));
+  gulp.watch(paths.src.sass, gulp.task('sass'));
   gulp.watch(paths.src.js, gulp.task('js'));
   gulp.watch(paths.src.tpl, gulp.task('templates'));
 }));
