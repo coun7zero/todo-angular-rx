@@ -2,17 +2,14 @@ import TaskList from './task-list';
 
 
 describe('TaskListController', () => {
-  var controller;
-  var scope;
-  var stateService;
-  var taskService;
+  let controller;
+  let scope;
+  let taskService;
 
 
   beforeEach(() => {
     inject(($controller, $q, $rootScope) => {
       scope = $rootScope.$new();
-
-      stateService = {};
 
       taskService = {
         tasks: [],
@@ -20,8 +17,6 @@ describe('TaskListController', () => {
       };
 
       controller = $controller(TaskList, {
-        $scope: scope,
-        StateService: stateService,
         TaskService: taskService
       });
     });
@@ -29,10 +24,6 @@ describe('TaskListController', () => {
 
 
   describe('Initialization', () => {
-    it('should set `scope.state` with stateService', () => {
-      expect(scope.state).toBe(stateService);
-    });
-
     it('should set property `tasks` with an array', () => {
       scope.$digest();
       expect(Array.isArray(controller.tasks)).toBe(true);
