@@ -67,7 +67,7 @@ var config = {
   },
 
   browserSync: {
-    browser: ['google chrome canary'],
+    browser: ['google chrome'],
     files: [paths.target + '/**/*'],
     notify: false,
     port: 7000,
@@ -296,17 +296,6 @@ gulp.task('templates', function(){
 });
 
 
-gulp.task('test', gulp.series('lint', 'clean.target', 'js', 'karma'));
-
-
-gulp.task('test.watch', gulp.series('lint', 'clean.target', 'js', 'karma.watch'));
-
-
-gulp.task('tdd', function(){
-  gulp.watch(paths.src.js, gulp.series('js', 'karma.run'));
-});
-
-
 gulp.task('build', gulp.series(
   'clean.target',
   'copy.assets',
@@ -318,7 +307,21 @@ gulp.task('build', gulp.series(
 ));
 
 
-gulp.task('default', gulp.series('build', function watch(){
+gulp.task('test', gulp.series('lint', 'build', 'karma'));
+
+
+gulp.task('test.watch', gulp.series('lint', 'build', 'karma.watch'));
+
+
+gulp.task('tdd', function(){
+  gulp.watch(paths.src.js, gulp.series('js', 'karma.run'));
+});
+
+
+gulp.task('default', gulp.series('lint', 'build', 'karma', 'server'));
+
+
+gulp.task('dev', gulp.series('build', 'server', function watch(){
   gulp.watch(paths.src.assets, gulp.task('copy.assets'));
   gulp.watch(paths.src.html, gulp.task('copy.html'));
   gulp.watch(paths.src.sass, gulp.task('sass'));
@@ -327,4 +330,4 @@ gulp.task('default', gulp.series('build', function watch(){
 }));
 
 
-gulp.task('dist', gulp.series('test', 'build', 'inject', 'headers'));
+gulp.task('dist', gulp.series('lint', 'build', 'karma', 'inject', 'headers'));
