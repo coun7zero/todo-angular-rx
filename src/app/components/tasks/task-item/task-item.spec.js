@@ -34,6 +34,10 @@ describe('TaskItemController', () => {
       expect(controller.editing).toBe(false);
     });
 
+    it('should set property `statusUpdated` to be `false`', () => {
+      expect(controller.statusUpdated).toBe(false);
+    });
+
     it('should define a `cancelEdit` function', () => {
       expect(typeof controller.cancelEdit).toBe('function');
     });
@@ -143,6 +147,16 @@ describe('TaskItemController', () => {
     it('should delegate to TaskService#updateTask', () => {
       controller.toggleCompleted();
       expect(taskService.updateTask.callCount).toBe(1);
+    });
+
+    it('should toggle `statusModified` value', () => {
+      expect(controller.statusUpdated).toBe(false);
+
+      controller.toggleCompleted();
+      expect(controller.statusUpdated).toBe(true);
+
+      controller.toggleCompleted();
+      expect(controller.statusUpdated).toBe(false);
     });
   });
 

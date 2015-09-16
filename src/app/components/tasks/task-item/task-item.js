@@ -8,6 +8,7 @@ export default class TaskItem {
     this.scope = $scope;
     this.taskService = taskService;
     this.editing = false;
+    this.statusUpdated = false;
   }
 
   cancelEdit() {
@@ -36,5 +37,6 @@ export default class TaskItem {
   toggleCompleted() {
     this.scope.task.completed = !this.scope.task.completed;
     this.taskService.updateTask(this.scope.task);
+    this.statusUpdated = this.scope.task.completed;
   }
 }
