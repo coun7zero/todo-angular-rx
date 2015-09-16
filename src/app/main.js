@@ -1,9 +1,9 @@
-import { API_TYPE } from './config/api';
-import { LOCAL_STORAGE_KEY } from './config/local-storage';
-import LocalStorageApi from './core/api/local-storage-api';
-import ServerApi from './core/api/server-api';
+import { LOCAL_STORAGE_KEY } from './config/storage';
+import { STORAGE_STRATEGY } from './config/storage';
 import { stateConfig } from './core/state/state-config';
 import StateService from './core/state/state-service';
+import LocalStorageStrategy from './core/task/local-storage-strategy';
+import ServerStorageStrategy from './core/task/server-storage-strategy';
 import Task from './core/task/task';
 import TaskService from './core/task/task-service';
 import App from './components/app/app';
@@ -27,15 +27,8 @@ const app = angular
   /*===================================
     Constants
   -----------------------------------*/
-  .constant('apiType', API_TYPE)
   .constant('localStorageKey', LOCAL_STORAGE_KEY)
-
-
-  /*===================================
-    API
-  -----------------------------------*/
-  .service('LocalStorageApi', LocalStorageApi)
-  .service('ServerApi', ServerApi)
+  .constant('storageStrategy', STORAGE_STRATEGY)
 
 
   /*===================================
@@ -49,6 +42,8 @@ const app = angular
     Task
   -----------------------------------*/
   .value('Task', Task)
+  .service('LocalStorageStrategy', LocalStorageStrategy)
+  .service('ServerStorageStrategy', ServerStorageStrategy)
   .service('TaskService', TaskService)
 
 

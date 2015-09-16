@@ -3,7 +3,7 @@ import Inject from 'app/core/decorators/inject';
 
 @Inject('$q', '$localStorage', 'localStorageKey', 'Task') // eslint-disable-line new-cap
 
-export default class LocalStorageApi {
+export default class LocalStorageStrategy {
   constructor($q, $localStorage, localStorageKey, Task) {
     this.q = $q;
     this.storage = $localStorage;

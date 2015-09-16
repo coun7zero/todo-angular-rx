@@ -3,7 +3,7 @@ import Inject from 'app/core/decorators/inject';
 
 @Inject('$http', 'Task') // eslint-disable-line new-cap
 
-export default class ServerApi {
+export default class ServerStorageStrategy {
   constructor($http, Task) {
     this.http = $http;
     this.Task = Task;

@@ -2,38 +2,38 @@ import TaskService from './task-service';
 
 
 describe('TaskService', () => {
-  const LocalStorageApi = {};
-  const ServerApi = {};
+  const LocalStorageStrategy = {};
+  const ServerStorageStrategy = {};
 
 
-  describe('local api', () => {
+  describe('local storage strategy', () => {
     beforeEach(() => {
       angular.mock.module($provide => {
-        $provide.constant('apiType', 'LocalStorageApi');
-        $provide.value('LocalStorageApi', LocalStorageApi);
-        $provide.value('ServerApi', ServerApi);
+        $provide.constant('storageStrategy', 'LocalStorageStrategy');
+        $provide.value('LocalStorageStrategy', LocalStorageStrategy);
+        $provide.value('ServerStorageStrategy', ServerStorageStrategy);
         $provide.factory('taskService', TaskService);
       });
     });
 
     it('should implement local api', inject(taskService => {
-      expect(taskService).toBe(LocalStorageApi);
+      expect(taskService).toBe(LocalStorageStrategy);
     }));
   });
 
 
-  describe('server api', () => {
+  describe('server storage strategy', () => {
     beforeEach(() => {
       angular.mock.module($provide => {
-        $provide.constant('apiType', 'ServerApi');
-        $provide.value('LocalApi', LocalStorageApi);
-        $provide.value('ServerApi', ServerApi);
+        $provide.constant('storageStrategy', 'ServerStorageStrategy');
+        $provide.value('LocalStorageStrategy', LocalStorageStrategy);
+        $provide.value('ServerStorageStrategy', ServerStorageStrategy);
         $provide.factory('taskService', TaskService);
       });
     });
 
     it('should implement server api', inject(taskService => {
-      expect(taskService).toBe(ServerApi);
+      expect(taskService).toBe(ServerStorageStrategy);
     }));
   });
 

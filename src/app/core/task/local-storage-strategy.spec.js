@@ -1,8 +1,8 @@
-import LocalStorageApi from './local-storage-api';
+import LocalStorageStrategy from './local-storage-strategy';
 import Task from '../task/task';
 
 
-describe('LocalStorageApi', () => {
+describe('LocalStorageStrategy', () => {
   const storageKey = 'test';
 
 
@@ -10,7 +10,7 @@ describe('LocalStorageApi', () => {
     angular.mock.module('angular-storage', $provide => {
       $provide.constant('localStorageKey', storageKey);
       $provide.value('Task', Task);
-      $provide.service('api', LocalStorageApi);
+      $provide.service('storage', LocalStorageStrategy);
     });
   });
 
@@ -28,30 +28,30 @@ describe('LocalStorageApi', () => {
 
 
   describe('Creating a task', () => {
-    it('should add task to `tasks` array', inject(($rootScope, api) => {
+    it('should add task to `tasks` array', inject(($rootScope, storage) => {
       const title = 'test';
 
-      api.tasks = [];
-      api.createTask(title);
+      storage.tasks = [];
+      storage.createTask(title);
       $rootScope.$digest();
 
-      expect(api.tasks[0].title).toBe(title);
+      expect(storage.tasks[0].title).toBe(title);
     }));
 
-    it('should add task to localStorage', inject(($rootScope, api) => {
+    it('should add task to localStorage', inject(($rootScope, storage) => {
       const title = 'test';
 
-      api.tasks = [];
-      api.createTask(title);
+      storage.tasks = [];
+      storage.createTask(title);
       $rootScope.$digest();
 
-      expect(taskInStorage(api.tasks[0])).toBe(true);
+      expect(taskInStorage(storage.tasks[0])).toBe(true);
     }));
 
-    it('should fulfill promise with the newly created task', inject(($rootScope, api) => {
+    it('should fulfill promise with the newly created task', inject(($rootScope, storage) => {
       const title = 'test';
 
-      api
+      storage
         .createTask(title)
         .then(function(task){
           expect(task.title).toBe(title);
@@ -63,32 +63,32 @@ describe('LocalStorageApi', () => {
 
 
   describe('Deleting a task', () => {
-    it('should remove task from `tasks` array', inject(($rootScope, api) => {
+    it('should remove task from `tasks` array', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api.tasks = [task];
-      api.deleteTask(task);
+      storage.tasks = [task];
+      storage.deleteTask(task);
       $rootScope.$digest();
 
-      expect(api.tasks.length).toBe(0);
+      expect(storage.tasks.length).toBe(0);
     }));
 
-    it('should remove task from localStorage', inject(($rootScope, api) => {
+    it('should remove task from localStorage', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api.tasks = [task];
-      localStorage.setItem(storageKey, JSON.stringify(api.tasks));
+      storage.tasks = [task];
+      localStorage.setItem(storageKey, JSON.stringify(storage.tasks));
 
-      api.deleteTask(task);
+      storage.deleteTask(task);
       $rootScope.$digest();
 
       expect(taskInStorage(task)).toBe(false);
     }));
 
-    it('should fulfill promise with the deleted task', inject(($rootScope, api) => {
+    it('should fulfill promise with the deleted task', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api
+      storage
         .deleteTask(task)
         .then(function($task){
           expect($task).toBe(task);
@@ -100,37 +100,37 @@ describe('LocalStorageApi', () => {
 
 
   describe('Updating a task', () => {
-    it('should update task in `tasks` array', inject(($rootScope, api) => {
+    it('should update task in `tasks` array', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api.tasks = [task];
+      storage.tasks = [task];
 
       task.title = 'foo';
 
-      api.updateTask(task);
+      storage.updateTask(task);
       $rootScope.$digest();
 
-      expect(api.tasks[0]).toBe(task);
+      expect(storage.tasks[0]).toBe(task);
     }));
 
-    it('should update task in localStorage', inject(($rootScope, api) => {
+    it('should update task in localStorage', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api.tasks = [task];
-      localStorage.setItem(storageKey, JSON.stringify(api.tasks));
+      storage.tasks = [task];
+      localStorage.setItem(storageKey, JSON.stringify(storage.tasks));
 
       task.title = 'foo';
 
-      api.updateTask(task);
+      storage.updateTask(task);
       $rootScope.$digest();
 
       expect(taskInStorage(task)).toBe(true);
     }));
 
-    it('should fulfill promise with the updated task', inject(($rootScope, api) => {
+    it('should fulfill promise with the updated task', inject(($rootScope, storage) => {
       const task = {title: 'test'};
 
-      api
+      storage
         .updateTask(task)
         .then(function($task){
           expect($task).toBe(task);
@@ -142,28 +142,28 @@ describe('LocalStorageApi', () => {
 
 
   describe('Getting tasks from localStorage', () => {
-    it('should set `tasks` with an array of tasks from localStorage', inject(($rootScope, api) => {
+    it('should set `tasks` with an array of tasks from localStorage', inject(($rootScope, storage) => {
       localStorage.setItem(storageKey, JSON.stringify([{title: 'task1'}, {title: 'task2'}]));
 
-      api.getTasks();
+      storage.getTasks();
       $rootScope.$digest();
 
-      expect(Array.isArray(api.tasks)).toBe(true);
-      expect(api.tasks.length).toBe(2);
+      expect(Array.isArray(storage.tasks)).toBe(true);
+      expect(storage.tasks.length).toBe(2);
     }));
 
-    it('should set `tasks` with an empty array if localStorage is empty', inject(($rootScope, api) => {
-      api.getTasks();
+    it('should set `tasks` with an empty array if localStorage is empty', inject(($rootScope, storage) => {
+      storage.getTasks();
       $rootScope.$digest();
 
-      expect(Array.isArray(api.tasks)).toBe(true);
-      expect(api.tasks.length).toBe(0);
+      expect(Array.isArray(storage.tasks)).toBe(true);
+      expect(storage.tasks.length).toBe(0);
     }));
 
-    it('should fulfill promise with an array of tasks', inject(($rootScope, api) => {
+    it('should fulfill promise with an array of tasks', inject(($rootScope, storage) => {
       localStorage.setItem(storageKey, JSON.stringify([{title: 'task1'}, {title: 'task2'}]));
 
-      api
+      storage
         .getTasks()
         .then(tasks => {
           expect(Array.isArray(tasks)).toBe(true);
@@ -173,8 +173,8 @@ describe('LocalStorageApi', () => {
       $rootScope.$digest();
     }));
 
-    it('should fulfill promise with an empty array if there are no tasks', inject(($rootScope, api) => {
-      api
+    it('should fulfill promise with an empty array if there are no tasks', inject(($rootScope, storage) => {
+      storage
         .getTasks()
         .then(tasks => {
           expect(Array.isArray(tasks)).toBe(true);

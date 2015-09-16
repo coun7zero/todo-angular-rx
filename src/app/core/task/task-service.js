@@ -1,10 +1,10 @@
 TaskService.$inject = [
   '$injector',
   '$log',
-  'apiType'
+  'storageStrategy'
 ];
 
-export default function TaskService($injector, $log, apiType) {
-  $log.info('API:', apiType);
-  return $injector.get(apiType);
+export default function TaskService($injector, $log, storageStrategy) {
+  $log.info('API:', storageStrategy);
+  return $injector.get(storageStrategy);
 }
