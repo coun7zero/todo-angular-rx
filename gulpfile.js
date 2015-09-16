@@ -217,7 +217,7 @@ gulp.task('js.bundle', function(done){
       done();
     })
     .catch(function(error){
-      console.log('Builder Error:', error);
+      gutil.log(gutil.colors.red('Builder Error: ' + error));
       done();
     });
 });

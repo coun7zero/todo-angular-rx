@@ -12,21 +12,21 @@ export default class StateService {
   }
 
   isActiveTasks() {
-    return this.state.is('app.tasks.filtered', {status: this.STATUS_ACTIVE});
+    return this.state.is('app.tasks', {filter: this.STATUS_ACTIVE});
   }
 
   /**
    * @returns {boolean}
    */
   isCompletedTasks() {
-    return this.state.is('app.tasks.filtered', {status: this.STATUS_COMPLETED});
+    return this.state.is('app.tasks', {filter: this.STATUS_COMPLETED});
   }
 
   /**
    * @returns {boolean}
    */
   isTasks() {
-    return this.state.is('app.tasks');
+    return this.state.is('app.tasks', {filter: ''});
   }
 
   /**
@@ -34,7 +34,7 @@ export default class StateService {
    * @returns $state.current
    */
   toActiveTasks() {
-    return this.state.go('app.tasks.filtered', {status: this.STATUS_ACTIVE});
+    return this.state.go('app.tasks', {filter: this.STATUS_ACTIVE});
   }
 
   /**
@@ -42,7 +42,7 @@ export default class StateService {
    * @returns $state.current
    */
   toCompletedTasks() {
-    return this.state.go('app.tasks.filtered', {status: this.STATUS_COMPLETED});
+    return this.state.go('app.tasks', {filter: this.STATUS_COMPLETED});
   }
 
   /**
