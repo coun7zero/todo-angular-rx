@@ -5,11 +5,10 @@ import Inject from 'app/core/decorators/inject';
 
 export default class TaskList {
   constructor(taskService) {
-    this.taskService = taskService;
     this.tasks = [];
 
-    taskService.getTasks().then(() => {
-      this.tasks = taskService.tasks;
+    taskService.getTasks().then(tasks => {
+      this.tasks = tasks;
     });
   }
 }
