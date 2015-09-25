@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/r-park/todo-angular-es6.svg?branch=master)](https://travis-ci.org/r-park/todo-angular-es6)
 [![Coverage Status](https://coveralls.io/repos/r-park/todo-angular-es6/badge.svg?branch=master)](https://coveralls.io/r/r-park/todo-angular-es6?branch=master)
 
-# Todo app with Angular 1.4 and ES6
-- Angular 1.4
+# Todo app with Angular 1.5 and ES6
+- Angular 1.5
 - Angular ui-router
 - ES6
 - SASS
