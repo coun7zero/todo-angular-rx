@@ -30,6 +30,7 @@
         autocomplete="off"
         class="task-item__input"
         escape="taskItem.cancelEdit()"
+        focus="taskItem.editing"
         name="taskTitle"
         ng-blur="taskItem.save()"
         ng-model="taskItem.title"

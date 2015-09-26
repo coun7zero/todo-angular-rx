@@ -12,6 +12,7 @@ import TaskItem from './components/tasks/task-item/task-item';
 import TaskList from './components/tasks/task-list/task-list';
 import { taskStatusFilter } from './components/tasks/task-list/task-status-filter';
 import { escapeDirective } from './common/escape-directive';
+import { focusDirective } from './common/focus-directive';
 
 
 const app = angular
@@ -75,6 +76,7 @@ const app = angular
   /*===================================
     Directives
   -----------------------------------*/
+  .directive('focus', focusDirective)
   .directive('escape', escapeDirective);
 
 
