@@ -1,6 +1,6 @@
+import { routerConfig } from './router';
 import { LOCAL_STORAGE_KEY } from './config/storage';
 import { STORAGE_STRATEGY } from './config/storage';
-import { stateConfig } from './core/state/state-config';
 import StateService from './core/state/state-service';
 import LocalStorageStrategy from './core/task/local-storage-strategy';
 import ServerStorageStrategy from './core/task/server-storage-strategy';
@@ -11,8 +11,8 @@ import TaskForm from './components/tasks/task-form/task-form';
 import TaskItem from './components/tasks/task-item/task-item';
 import TaskList from './components/tasks/task-list/task-list';
 import { taskStatusFilter } from './components/tasks/task-list/task-status-filter';
-import { escapeDirective } from './common/escape-directive';
-import { focusDirective } from './common/focus-directive';
+import { escapeDirective } from './directives/escape-directive';
+import { focusDirective } from './directives/focus-directive';
 
 
 const app = angular
@@ -36,7 +36,7 @@ const app = angular
     State (ui-router)
   -----------------------------------*/
   .service('StateService', StateService)
-  .config(stateConfig)
+  .config(routerConfig)
 
 
   /*===================================

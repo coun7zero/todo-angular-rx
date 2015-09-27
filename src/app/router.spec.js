@@ -1,15 +1,15 @@
-import { stateConfig } from './state-config';
+import { routerConfig } from './router';
 import Task from 'app/core/task/task';
 
 
-describe('stateConfig', () => {
+describe('router', () => {
 
   beforeEach(() => {
     angular.module('test', ['ui.router', 'templates'])
       .controller('AppController', angular.noop)
       .controller('TaskFormController', angular.noop)
       .controller('TaskListController', angular.noop)
-      .config(stateConfig);
+      .config(routerConfig);
 
     angular.mock.module('test');
   });

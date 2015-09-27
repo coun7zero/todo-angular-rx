@@ -1,4 +1,4 @@
-export const stateConfig = ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
+export const routerConfig = ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
   $stateProvider
     .state({
       abstract: true,

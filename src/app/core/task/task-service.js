@@ -5,6 +5,6 @@ TaskService.$inject = [
 ];
 
 export default function TaskService($injector, $log, storageStrategy) {
-  $log.info('API:', storageStrategy);
+  $log.info('STORAGE_STRATEGY:', storageStrategy);
   return $injector.get(storageStrategy);
 }

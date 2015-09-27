@@ -1,6 +1,6 @@
-import { stateConfig } from './state-config';
-import StateService from './state-service';
+import { routerConfig } from 'app/router';
 import Task from 'app/core/task/task';
+import StateService from './state-service';
 
 
 describe('StateService', () => {
@@ -11,7 +11,7 @@ describe('StateService', () => {
       .service('stateService', StateService)
       .controller('TaskFormController', () => {})
       .controller('TaskListController', () => {})
-      .config(stateConfig);
+      .config(routerConfig);
 
     angular.mock.module('test');
   });
