@@ -2,7 +2,6 @@ import Task from './task';
 
 
 describe('Task', () => {
-
   beforeEach(() => {
     angular.mock.module(($provide) => {
       $provide.value('Task', Task);

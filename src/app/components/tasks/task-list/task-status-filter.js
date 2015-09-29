@@ -1,5 +1,4 @@
 export const taskStatusFilter = ['Task', (Task) => {
-
   return (taskList, status) => {
     if (!status) return taskList;
 
@@ -9,5 +8,4 @@ export const taskStatusFilter = ['Task', (Task) => {
       return task.completed === completed;
     });
   };
-
 }];

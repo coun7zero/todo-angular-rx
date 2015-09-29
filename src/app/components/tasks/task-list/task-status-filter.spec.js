@@ -3,7 +3,6 @@ import { taskStatusFilter } from './task-status-filter';
 
 
 describe('taskStatus filter', () => {
-
   beforeEach(() => {
     angular.module('test', [])
       .value('Task', Task)

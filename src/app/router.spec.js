@@ -3,7 +3,6 @@ import Task from 'app/core/task/task';
 
 
 describe('router', () => {
-
   beforeEach(() => {
     angular.module('test', ['ui.router', 'templates'])
       .controller('AppController', angular.noop)

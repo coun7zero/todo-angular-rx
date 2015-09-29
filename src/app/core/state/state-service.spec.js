@@ -4,7 +4,6 @@ import StateService from './state-service';
 
 
 describe('StateService', () => {
-
   beforeEach(() => {
     angular.module('test', ['ui.router', 'templates'])
       .value('Task', Task)
