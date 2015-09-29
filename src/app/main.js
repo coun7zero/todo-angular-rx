@@ -1,6 +1,5 @@
 import { routerConfig } from './router';
-import { LOCAL_STORAGE_KEY } from './config/storage';
-import { STORAGE_STRATEGY } from './config/storage';
+import * as storageConfig from './config/storage';
 import StateService from './core/state/state-service';
 import LocalStorageStrategy from './core/task/local-storage-strategy';
 import ServerStorageStrategy from './core/task/server-storage-strategy';
@@ -28,8 +27,7 @@ const app = angular
   /*===================================
     Constants
   -----------------------------------*/
-  .constant('localStorageKey', LOCAL_STORAGE_KEY)
-  .constant('storageStrategy', STORAGE_STRATEGY)
+  .constant('storageConfig', storageConfig)
 
 
   /*===================================

@@ -1,4 +1,5 @@
 import TaskService from './task-service';
+import * as storageConfig from 'app/config/storage';
 
 
 describe('TaskService', () => {
@@ -8,10 +9,12 @@ describe('TaskService', () => {
 
   describe('local storage strategy', () => {
     beforeEach(() => {
+      let config = angular.copy(storageConfig);
+      config.STORAGE_STRATEGY = 'LocalStorageStrategy';
+
       angular.mock.module($provide => {
-        $provide.constant('storageStrategy', 'LocalStorageStrategy');
+        $provide.constant('storageConfig', config);
         $provide.value('LocalStorageStrategy', LocalStorageStrategy);
-        $provide.value('ServerStorageStrategy', ServerStorageStrategy);
         $provide.factory('taskService', TaskService);
       });
     });
@@ -24,9 +27,11 @@ describe('TaskService', () => {
 
   describe('server storage strategy', () => {
     beforeEach(() => {
+      let config = angular.copy(storageConfig);
+      config.STORAGE_STRATEGY = 'ServerStorageStrategy';
+
       angular.mock.module($provide => {
-        $provide.constant('storageStrategy', 'ServerStorageStrategy');
-        $provide.value('LocalStorageStrategy', LocalStorageStrategy);
+        $provide.constant('storageConfig', config);
         $provide.value('ServerStorageStrategy', ServerStorageStrategy);
         $provide.factory('taskService', TaskService);
       });

@@ -8,7 +8,7 @@ describe('LocalStorageStrategy', () => {
 
   beforeEach(() => {
     angular.mock.module('angular-storage', $provide => {
-      $provide.constant('localStorageKey', storageKey);
+      $provide.constant('storageConfig', {LOCAL_STORAGE_KEY: storageKey});
       $provide.value('Task', Task);
       $provide.service('storage', LocalStorageStrategy);
     });

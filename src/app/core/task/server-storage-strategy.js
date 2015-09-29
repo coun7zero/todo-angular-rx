@@ -1,18 +1,20 @@
 import Inject from 'app/core/decorators/inject';
 
 
-@Inject('$http', 'Task') // eslint-disable-line new-cap
+@Inject('$http', 'storageConfig', 'Task') // eslint-disable-line new-cap
 
 export default class ServerStorageStrategy {
-  constructor($http, Task) {
+  constructor($http, storageConfig, Task) {
     this.http = $http;
     this.Task = Task;
     this.tasks = [];
+    this.baseUrl = storageConfig.BASE_URL;
+    this.tasksUrl = storageConfig.TASKS_URL;
   }
 
   getTasks() {
     return this.http
-      .get('http://localhost:8000/tasks')
+      .get(this.tasksUrl)
       .then(response => {
         return this.tasks = response.data || [];
       });
@@ -21,7 +23,7 @@ export default class ServerStorageStrategy {
   createTask(title) {
     var task = new this.Task(title);
     return this.http
-      .post('http://localhost:8000/tasks', task)
+      .post(this.tasksUrl, task)
       .then(response => {
         this.tasks.push(response.data);
         return response.data;
@@ -31,7 +33,7 @@ export default class ServerStorageStrategy {
   deleteTask(task) {
     this.tasks.splice(this.tasks.indexOf(task), 1);
     return this.http
-      .delete('http://localhost:8000' + task.links.self)
+      .delete(this.baseUrl + task.links.self)
       .then(() => {
         return task;
       });
@@ -39,7 +41,7 @@ export default class ServerStorageStrategy {
 
   updateTask(task) {
     return this.http
-      .put('http://localhost:8000' + task.links.self, task)
+      .put(this.baseUrl + task.links.self, task)
       .then(() => {
         return task;
       });

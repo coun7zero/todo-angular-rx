@@ -1,10 +1,10 @@
 TaskService.$inject = [
   '$injector',
   '$log',
-  'storageStrategy'
+  'storageConfig'
 ];
 
-export default function TaskService($injector, $log, storageStrategy) {
-  $log.info('STORAGE_STRATEGY:', storageStrategy);
-  return $injector.get(storageStrategy);
+export default function TaskService($injector, $log, storageConfig) {
+  $log.info('STORAGE_STRATEGY:', storageConfig.STORAGE_STRATEGY);
+  return $injector.get(storageConfig.STORAGE_STRATEGY);
 }

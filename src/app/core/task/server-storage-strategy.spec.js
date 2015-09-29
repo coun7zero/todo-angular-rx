@@ -1,5 +1,6 @@
 import ServerStorageStrategy from './server-storage-strategy';
 import Task from '../task/task';
+import * as storageConfig from 'app/config/storage';
 
 
 describe('ServerStorageStrategy', () => {
@@ -9,6 +10,7 @@ describe('ServerStorageStrategy', () => {
 
   beforeEach(() => {
     angular.mock.module($provide => {
+      $provide.constant('storageConfig', storageConfig);
       $provide.value('Task', Task);
       $provide.service('ServerStorageStrategy', ServerStorageStrategy);
     });
@@ -29,7 +31,7 @@ describe('ServerStorageStrategy', () => {
     it('should add task to `tasks` array', () => {
       const task = {title: 'test'};
 
-      httpBackend.whenPOST('http://localhost:8000/tasks').respond(200, task);
+      httpBackend.whenPOST(storageConfig.TASKS_URL).respond(200, task);
       storage.tasks = [];
       storage.createTask(task.title);
       httpBackend.flush();
@@ -39,7 +41,7 @@ describe('ServerStorageStrategy', () => {
 
     it('should POST new task to server', () => {
       const task = {completed: false, title: 'test'};
-      httpBackend.expectPOST('http://localhost:8000/tasks', task).respond(200);
+      httpBackend.expectPOST(storageConfig.TASKS_URL, task).respond(200);
       storage.createTask(task.title);
       httpBackend.flush();
     });
@@ -47,7 +49,7 @@ describe('ServerStorageStrategy', () => {
     it('should fulfill promise with the newly created task', () => {
       const task = {title: 'test'};
 
-      httpBackend.whenPOST('http://localhost:8000/tasks').respond(200, task);
+      httpBackend.whenPOST(storageConfig.TASKS_URL).respond(200, task);
 
       storage.createTask(task.title)
         .then(_task => {
@@ -64,7 +66,7 @@ describe('ServerStorageStrategy', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
 
-      httpBackend.whenDELETE('http://localhost:8000/tasks/123').respond(204);
+      httpBackend.whenDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
       storage.tasks = [task];
       storage.deleteTask(task);
       httpBackend.flush();
@@ -76,7 +78,7 @@ describe('ServerStorageStrategy', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
 
-      httpBackend.expectDELETE('http://localhost:8000/tasks/123').respond(204);
+      httpBackend.expectDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
       storage.deleteTask(task);
       httpBackend.flush();
     });
@@ -85,7 +87,7 @@ describe('ServerStorageStrategy', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
 
-      httpBackend.whenDELETE('http://localhost:8000/tasks/123').respond(204);
+      httpBackend.whenDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
 
       storage.deleteTask(task)
         .then(_task => {
@@ -104,7 +106,7 @@ describe('ServerStorageStrategy', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
 
-      httpBackend.expectPUT('http://localhost:8000/tasks/123', task).respond(200);
+      httpBackend.expectPUT(storageConfig.BASE_URL + task.links.self, task).respond(200);
       storage.updateTask(task);
       httpBackend.flush();
     });
@@ -113,7 +115,7 @@ describe('ServerStorageStrategy', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
 
-      httpBackend.whenPUT('http://localhost:8000/tasks/123').respond(200);
+      httpBackend.whenPUT(storageConfig.BASE_URL + task.links.self).respond(200);
 
       storage.updateTask(task)
         .then(_task => {
@@ -127,13 +129,13 @@ describe('ServerStorageStrategy', () => {
 
   describe('Getting tasks', () => {
     it('should GET tasks from server', () => {
-      httpBackend.expectGET('http://localhost:8000/tasks').respond(200, []);
+      httpBackend.expectGET(storageConfig.TASKS_URL).respond(200, []);
       storage.getTasks();
       httpBackend.flush();
     });
 
     it('should set `tasks` with an array of tasks from server', () => {
-      httpBackend.whenGET('http://localhost:8000/tasks').respond(200, [{}, {}]);
+      httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, [{}, {}]);
       storage.tasks = [];
       storage.getTasks();
       httpBackend.flush();
@@ -142,7 +144,7 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should set `tasks` with an empty array if there are no tasks', () => {
-      httpBackend.whenGET('http://localhost:8000/tasks').respond(200, []);
+      httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, []);
       storage.tasks = [];
       storage.getTasks();
       httpBackend.flush();
@@ -151,7 +153,7 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should fulfill promise with the tasks array', () => {
-      httpBackend.whenGET('http://localhost:8000/tasks').respond(200, [{}, {}]);
+      httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, [{}, {}]);
       storage.tasks = [];
 
       storage.getTasks()
