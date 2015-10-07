@@ -1,5 +1,5 @@
-import TaskService from './task-service';
-import * as storageConfig from 'app/config/storage';
+import { TaskService } from './task-service';
+import { storageConfig } from 'app/config/storage';
 
 
 describe('TaskService', () => {

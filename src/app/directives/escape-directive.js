@@ -5,7 +5,7 @@ export const escapeDirective = () => {
     restrict: 'A',
 
     link: (scope, $element, attrs) => {
-      $element.on('keyup', (event) => {
+      $element.on('keyup', event => {
         if (event.keyCode === ESCAPE_KEY_CODE) {
           scope.$apply(attrs.escape);
         }

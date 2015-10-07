@@ -1,4 +1,4 @@
-import Task from 'app/core/task/task';
+import { Task } from 'app/core/task/task';
 import { taskStatusFilter } from './task-status-filter';
 
 

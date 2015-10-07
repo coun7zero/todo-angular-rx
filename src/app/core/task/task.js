@@ -1,7 +1,5 @@
-export default class Task {
-
+export class Task {
   static STATUS_ACTIVE = 'active';
-
   static STATUS_COMPLETED = 'completed';
 
   constructor(title = '') {

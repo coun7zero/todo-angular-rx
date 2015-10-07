@@ -1,14 +1,12 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('TaskService') // eslint-disable-line new-cap
-
-export default class TaskList {
+@Inject('TaskService')
+export class TaskList {
   constructor(taskService) {
     this.tasks = [];
 
-    taskService.getTasks().then(tasks => {
-      this.tasks = tasks;
-    });
+    taskService.loadTasks()
+      .then(tasks => this.tasks = tasks );
   }
 }

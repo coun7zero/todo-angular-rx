@@ -23,7 +23,6 @@
   <script src="lib/external-helpers.min.js"></script>
   <script src="lib/es6-module-loader.js"></script>
   <script src="lib/system.js"></script>
-  <script src="lib/fastclick.js"></script>
   <script src="templates.js"></script>
   <!-- inject:js -->
   <!-- endinject -->
@@ -33,12 +32,6 @@
     });
 
     System.import('app/main');
-
-    if ('addEventListener' in document) {
-      document.addEventListener('DOMContentLoaded', function(){
-        FastClick.attach(document.body);
-      }, false);
-    }
   </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-import ServerStorageStrategy from './server-storage-strategy';
-import Task from '../task/task';
-import * as storageConfig from 'app/config/storage';
+import { ServerStorageStrategy } from './server-storage-strategy';
+import { Task } from '../task/task';
+import { storageConfig } from 'app/config/storage';
 
 
 describe('ServerStorageStrategy', () => {
@@ -100,8 +100,6 @@ describe('ServerStorageStrategy', () => {
 
 
   describe('Updating a task', () => {
-    xit('should update task in `tasks` array', () => {});
-
     it('should PUT task to server', () => {
       const task = new Task('test');
       task.links = {self: '/tasks/123'};
@@ -130,14 +128,14 @@ describe('ServerStorageStrategy', () => {
   describe('Getting tasks', () => {
     it('should GET tasks from server', () => {
       httpBackend.expectGET(storageConfig.TASKS_URL).respond(200, []);
-      storage.getTasks();
+      storage.loadTasks();
       httpBackend.flush();
     });
 
     it('should set `tasks` with an array of tasks from server', () => {
       httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, [{}, {}]);
       storage.tasks = [];
-      storage.getTasks();
+      storage.loadTasks();
       httpBackend.flush();
 
       expect(storage.tasks.length).toBe(2);
@@ -146,7 +144,7 @@ describe('ServerStorageStrategy', () => {
     it('should set `tasks` with an empty array if there are no tasks', () => {
       httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, []);
       storage.tasks = [];
-      storage.getTasks();
+      storage.loadTasks();
       httpBackend.flush();
 
       expect(storage.tasks.length).toBe(0);
@@ -156,7 +154,7 @@ describe('ServerStorageStrategy', () => {
       httpBackend.whenGET(storageConfig.TASKS_URL).respond(200, [{}, {}]);
       storage.tasks = [];
 
-      storage.getTasks()
+      storage.loadTasks()
         .then(tasks => {
           expect(tasks).toBe(storage.tasks);
         });

@@ -1,9 +1,8 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('$state', '$stateParams', 'Task') // eslint-disable-line new-cap
-
-export default class StateService {
+@Inject('$state', '$stateParams', 'Task')
+export class StateService {
   constructor($state, $stateParams, Task) {
     this.state = $state;
     this.params = $stateParams;
@@ -11,6 +10,9 @@ export default class StateService {
     this.STATUS_COMPLETED = Task.STATUS_COMPLETED;
   }
 
+  /**
+   * @returns {boolean}
+   */
   isActiveTasks() {
     return this.state.is('app.tasks', {filter: this.STATUS_ACTIVE});
   }

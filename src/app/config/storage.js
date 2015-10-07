@@ -1,8 +1,12 @@
-export const LOCAL_STORAGE_KEY = 'TODO_APP';
+const baseUrl = 'http://localhost:8000';
+
+export const storageConfig = {
+  LOCAL_STORAGE_KEY: 'TODO-APP',
 
   // LocalStorageStrategy | ServerStorageStrategy
-export const STORAGE_STRATEGY = 'LocalStorageStrategy';
+  STORAGE_STRATEGY: 'LocalStorageStrategy',
 
-export const BASE_URL = 'http://localhost:8000';
+  BASE_URL: baseUrl,
 
-export const TASKS_URL = BASE_URL + '/tasks';
+  TASKS_URL: baseUrl + '/tasks'
+};

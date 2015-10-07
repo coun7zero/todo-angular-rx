@@ -1,9 +1,8 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('StateService') // eslint-disable-line new-cap
-
-export default class App {
+@Inject('StateService')
+export class App {
   constructor(stateService) {
     this.state = stateService;
   }

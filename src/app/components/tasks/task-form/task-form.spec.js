@@ -1,4 +1,4 @@
-import TaskForm from './task-form';
+import { TaskForm } from './task-form';
 
 
 describe('TaskFormController', () => {

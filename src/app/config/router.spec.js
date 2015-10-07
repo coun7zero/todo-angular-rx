@@ -1,8 +1,8 @@
 import { routerConfig } from './router';
-import Task from 'app/core/task/task';
+import { Task } from 'app/core/task/task';
 
 
-describe('router', () => {
+describe('Router config', () => {
   beforeEach(() => {
     angular.module('test', ['ui.router', 'templates'])
       .controller('AppController', angular.noop)

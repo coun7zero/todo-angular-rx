@@ -1,9 +1,8 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('$scope', 'TaskService') // eslint-disable-line new-cap
-
-export default class TaskForm {
+@Inject('$scope', 'TaskService')
+export class TaskForm {
   constructor($scope, taskService) {
     this.scope = $scope;
     this.taskService = taskService;
@@ -18,9 +17,7 @@ export default class TaskForm {
     if (this.scope.newTaskForm.$valid) {
       this.taskService
         .createTask(this.title)
-        .then(() => {
-          this.setTitle();
-        });
+        .then(() => this.setTitle());
     }
   }
 

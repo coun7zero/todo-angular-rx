@@ -1,4 +1,4 @@
-import TaskList from './task-list';
+import { TaskList } from './task-list';
 
 
 describe('TaskListController', () => {
@@ -13,7 +13,7 @@ describe('TaskListController', () => {
 
       taskService = {
         tasks: [],
-        getTasks: () => { return $q.resolve([]); }
+        loadTasks: () => { return $q.resolve([]); }
       };
 
       controller = $controller(TaskList, {

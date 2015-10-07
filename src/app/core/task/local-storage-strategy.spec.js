@@ -1,5 +1,5 @@
-import LocalStorageStrategy from './local-storage-strategy';
-import Task from '../task/task';
+import { LocalStorageStrategy } from './local-storage-strategy';
+import { Task } from '../task/task';
 
 
 describe('LocalStorageStrategy', () => {
@@ -145,7 +145,7 @@ describe('LocalStorageStrategy', () => {
     it('should set `tasks` with an array of tasks from localStorage', inject(($rootScope, storage) => {
       localStorage.setItem(storageKey, JSON.stringify([{title: 'task1'}, {title: 'task2'}]));
 
-      storage.getTasks();
+      storage.loadTasks();
       $rootScope.$digest();
 
       expect(Array.isArray(storage.tasks)).toBe(true);
@@ -153,7 +153,7 @@ describe('LocalStorageStrategy', () => {
     }));
 
     it('should set `tasks` with an empty array if localStorage is empty', inject(($rootScope, storage) => {
-      storage.getTasks();
+      storage.loadTasks();
       $rootScope.$digest();
 
       expect(Array.isArray(storage.tasks)).toBe(true);
@@ -164,7 +164,7 @@ describe('LocalStorageStrategy', () => {
       localStorage.setItem(storageKey, JSON.stringify([{title: 'task1'}, {title: 'task2'}]));
 
       storage
-        .getTasks()
+        .loadTasks()
         .then(tasks => {
           expect(Array.isArray(tasks)).toBe(true);
           expect(tasks.length).toBe(2);
@@ -175,7 +175,7 @@ describe('LocalStorageStrategy', () => {
 
     it('should fulfill promise with an empty array if there are no tasks', inject(($rootScope, storage) => {
       storage
-        .getTasks()
+        .loadTasks()
         .then(tasks => {
           expect(Array.isArray(tasks)).toBe(true);
           expect(tasks.length).toBe(0);

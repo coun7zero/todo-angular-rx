@@ -1,9 +1,8 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('$scope', 'TaskService') // eslint-disable-line new-cap
-
-export default class TaskItem {
+@Inject('$scope', 'TaskService')
+export class TaskItem {
   constructor($scope, taskService) {
     this.scope = $scope;
     this.taskService = taskService;

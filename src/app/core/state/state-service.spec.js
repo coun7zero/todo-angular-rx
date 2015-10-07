@@ -1,6 +1,6 @@
-import { routerConfig } from 'app/router';
-import Task from 'app/core/task/task';
-import StateService from './state-service';
+import { routerConfig } from 'app/config/router';
+import { Task } from 'app/core/task/task';
+import { StateService } from './state-service';
 
 
 describe('StateService', () => {

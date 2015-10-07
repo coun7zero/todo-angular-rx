@@ -1,9 +1,8 @@
-import Inject from 'app/core/decorators/inject';
+import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('$q', '$localStorage', 'storageConfig', 'Task') // eslint-disable-line new-cap
-
-export default class LocalStorageStrategy {
+@Inject('$q', '$localStorage', 'storageConfig', 'Task')
+export class LocalStorageStrategy {
   constructor($q, $localStorage, storageConfig, Task) {
     this.q = $q;
     this.storage = $localStorage;
@@ -12,7 +11,7 @@ export default class LocalStorageStrategy {
     this.tasks = [];
   }
 
-  getTasks() {
+  loadTasks() {
     this.tasks = this.storage.getObject(this.storageKey) || [];
     return this.q.resolve(this.tasks);
   }
