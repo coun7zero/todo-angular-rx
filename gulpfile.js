@@ -1,7 +1,6 @@
 var autoprefixer  = require('autoprefixer'),
     babel         = require('gulp-babel'),
     browserSync   = require('browser-sync'),
-    connect       = require('gulp-connect'),
     Builder       = require('systemjs-builder'),
     del           = require('del'),
     eslint        = require('gulp-eslint'),
@@ -66,13 +65,14 @@ var config = {
   },
 
   browserSync: {
-    browser: ['google chrome'],
     files: [paths.target + '/**/*'],
     notify: false,
+    open: false,
     port: 7000,
     reloadDelay: 200,
-    server: {baseDir: '.'},
-    startPath: paths.target
+    server: {
+      baseDir: paths.target
+    }
   },
 
   copy: {
@@ -243,25 +243,15 @@ gulp.task('sass', function(){
 
 
 gulp.task('server', function(done){
-  connect.server({
-    port: 7000,
-    livereload: false,
-    root: paths.target
-  });
-  done();
+  browserSync
+    .create()
+    .init(config.browserSync, done);
 });
 
 
 gulp.task('server.api', function(done){
   todoServer.start();
   done();
-});
-
-
-gulp.task('server.sync', function(done){
-  browserSync
-    .create()
-    .init(config.browserSync, done);
 });
 
 
@@ -291,7 +281,7 @@ gulp.task('build', gulp.series(
 /*===========================
   DEVELOP
 ---------------------------*/
-gulp.task('dev', gulp.series('build', 'server.sync', function watch(){
+gulp.task('dev', gulp.series('build', 'server', function watch(){
   gulp.watch(paths.src.assets, gulp.task('copy.assets'));
   gulp.watch(paths.src.html, gulp.task('copy.html'));
   gulp.watch(paths.src.sass, gulp.task('sass'));
