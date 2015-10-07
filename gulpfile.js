@@ -20,12 +20,6 @@ var autoprefixer  = require('autoprefixer'),
 
 
 /*=========================================================
-  ENV
----------------------------------------------------------*/
-var DIST = gutil.env._[0] === 'dist';
-
-
-/*=========================================================
   PATHS
 ---------------------------------------------------------*/
 var paths = {
@@ -113,7 +107,7 @@ var config = {
 
   sass: {
     errLogToConsole: true,
-    outputStyle: DIST ? 'compressed' : 'nested',
+    outputStyle: 'nested',
     precision: 10,
     sourceComments: false
   },
