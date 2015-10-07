@@ -29,7 +29,7 @@ describe('ServerStorageStrategy', () => {
 
   describe('Creating a task', () => {
     it('should add task to `tasks` array', () => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       httpBackend.whenPOST(storageConfig.TASKS_URL).respond(200, task);
       storage.tasks = [];
@@ -40,14 +40,14 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should POST new task to server', () => {
-      const task = {completed: false, title: 'test'};
+      let task = {completed: false, title: 'test'};
       httpBackend.expectPOST(storageConfig.TASKS_URL, task).respond(200);
       storage.createTask(task.title);
       httpBackend.flush();
     });
 
     it('should fulfill promise with the newly created task', () => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       httpBackend.whenPOST(storageConfig.TASKS_URL).respond(200, task);
 
@@ -63,7 +63,7 @@ describe('ServerStorageStrategy', () => {
 
   describe('Deleting a task', () => {
     it('should remove task from `tasks` array', () => {
-      const task = new Task('test');
+      let task = new Task('test');
       task.links = {self: '/tasks/123'};
 
       httpBackend.whenDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
@@ -75,7 +75,7 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should DELETE task from server', () => {
-      const task = new Task('test');
+      let task = new Task('test');
       task.links = {self: '/tasks/123'};
 
       httpBackend.expectDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
@@ -84,7 +84,7 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should fulfill promise with the deleted task', () => {
-      const task = new Task('test');
+      let task = new Task('test');
       task.links = {self: '/tasks/123'};
 
       httpBackend.whenDELETE(storageConfig.BASE_URL + task.links.self).respond(204);
@@ -101,7 +101,7 @@ describe('ServerStorageStrategy', () => {
 
   describe('Updating a task', () => {
     it('should PUT task to server', () => {
-      const task = new Task('test');
+      let task = new Task('test');
       task.links = {self: '/tasks/123'};
 
       httpBackend.expectPUT(storageConfig.BASE_URL + task.links.self, task).respond(200);
@@ -110,7 +110,7 @@ describe('ServerStorageStrategy', () => {
     });
 
     it('should fulfill promise with the updated task', () => {
-      const task = new Task('test');
+      let task = new Task('test');
       task.links = {self: '/tasks/123'};
 
       httpBackend.whenPUT(storageConfig.BASE_URL + task.links.self).respond(200);

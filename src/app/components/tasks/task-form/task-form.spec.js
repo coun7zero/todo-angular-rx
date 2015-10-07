@@ -52,7 +52,7 @@ describe('TaskFormController', () => {
       });
 
       it('should pass value of `title` to TaskService#createTask', () => {
-        const title = 'foo';
+        let title = 'foo';
         controller.title = title;
         controller.submit();
         scope.$digest();

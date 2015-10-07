@@ -20,7 +20,7 @@ describe('LocalStorageStrategy', () => {
 
 
   function taskInStorage(task) {
-    const list = JSON.parse(localStorage.getItem(storageKey));
+    let list = JSON.parse(localStorage.getItem(storageKey));
     return list.some(item => {
       return item.title === task.title;
     });
@@ -86,7 +86,7 @@ describe('LocalStorageStrategy', () => {
     }));
 
     it('should fulfill promise with the deleted task', inject(($rootScope, storage) => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       storage
         .deleteTask(task)
@@ -101,7 +101,7 @@ describe('LocalStorageStrategy', () => {
 
   describe('Updating a task', () => {
     it('should update task in `tasks` array', inject(($rootScope, storage) => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       storage.tasks = [task];
 
@@ -114,7 +114,7 @@ describe('LocalStorageStrategy', () => {
     }));
 
     it('should update task in localStorage', inject(($rootScope, storage) => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       storage.tasks = [task];
       localStorage.setItem(storageKey, JSON.stringify(storage.tasks));
@@ -128,7 +128,7 @@ describe('LocalStorageStrategy', () => {
     }));
 
     it('should fulfill promise with the updated task', inject(($rootScope, storage) => {
-      const task = {title: 'test'};
+      let task = {title: 'test'};
 
       storage
         .updateTask(task)
