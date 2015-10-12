@@ -1,12 +1,17 @@
 import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('TaskService')
+@Inject('$scope', 'TaskStore')
 export class TaskList {
-  constructor(taskService) {
+  constructor($scope, taskStore) {
     this.tasks = [];
 
-    taskService.loadTasks()
-      .then(tasks => this.tasks = tasks );
+    let subscription = taskStore.subscribe(tasks => {
+      this.tasks = tasks;
+    });
+
+    $scope.$on('$destroy', () => {
+      subscription.dispose();
+    });
   }
 }

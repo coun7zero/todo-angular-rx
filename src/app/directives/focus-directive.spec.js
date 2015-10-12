@@ -8,8 +8,7 @@ describe('focus directive', () => {
 
 
   beforeEach(() => {
-    angular
-      .module('test', [])
+    angular.module('test', [])
       .directive('focus', focusDirective);
 
     angular.mock.module('test');

@@ -6,6 +6,7 @@
 - Angular 1.5
 - Angular ui-router
 - ES6
+- RxJS
 - SASS
 - SystemJS
 
@@ -15,7 +16,7 @@ npm install
 ```
 
 #### Gulp v4
-The gulp tasks for this project require gulp v4-alpha ([docs](https://github.com/gulpjs/gulp/tree/4.0/docs)). If you don't wish to install it at this time, you must run the gulp tasks using the locally installed gulp. For example, with gulp v4 installed:
+The gulp tasks for this project require gulp v4-alpha. If you don't wish to install it at this time, you can run the gulp tasks using the locally installed gulp. For example, with gulp v4 installed:
 ```bash
 gulp dev
 ```
@@ -51,7 +52,7 @@ Running `gulp dev` will:
 ```bash
 gulp test
 ```
-The following command will run the test suite, watch for changes to the source files, and re-run the tests when sources are modified:
+The following command will run the test suites, then watch for changes to the source files, and re-run the tests whenever the sources are modified.
 ```bash
 gulp test.watch
 ```

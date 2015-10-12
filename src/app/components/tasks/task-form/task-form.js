@@ -15,9 +15,8 @@ export class TaskForm {
 
   submit() {
     if (this.scope.newTaskForm.$valid) {
-      this.taskService
-        .createTask(this.title)
-        .then(() => this.setTitle());
+      this.taskService.createTask(this.title);
+      this.setTitle();
     }
   }
 

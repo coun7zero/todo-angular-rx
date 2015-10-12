@@ -1,11 +1,11 @@
-export const taskStatusFilter = ['Task', Task => {
+export const taskStatusFilter = ['TaskStatus', TaskStatus => {
   return (taskList, filter) => {
     let completed;
 
-    if (filter === Task.STATUS_ACTIVE) {
+    if (filter === TaskStatus.ACTIVE) {
       completed = false;
     }
-    else if (filter === Task.STATUS_COMPLETED) {
+    else if (filter === TaskStatus.COMPLETED) {
       completed = true;
     }
     else {

@@ -19,7 +19,6 @@
   <script src="lib/angular.min.js"></script>
   <script src="lib/angular-aria.min.js"></script>
   <script src="lib/angular-ui-router.min.js"></script>
-  <script src="lib/angular-storage.min.js"></script>
   <script src="lib/external-helpers.min.js"></script>
   <script src="lib/es6-module-loader.js"></script>
   <script src="lib/system.js"></script>
@@ -28,7 +27,10 @@
   <!-- endinject -->
   <script>
     System.config({
-      defaultJSExtensions: true
+      defaultJSExtensions: true,
+      map: {
+        rx: 'lib/rx.all.min.js'
+      }
     });
 
     System.import('app/main');

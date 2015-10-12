@@ -1,45 +1,112 @@
+import { ActionTypes } from 'app/config/constants';
+import { Dispatcher } from 'app/core/dispatcher/dispatcher';
 import { TaskService } from './task-service';
-import { storageConfig } from 'app/config/storage';
 
 
 describe('TaskService', () => {
-  const LocalStorageStrategy = {};
-  const ServerStorageStrategy = {};
+  let dispatcher;
+  let serverService;
+  let taskService;
+  let q;
+  let scope;
 
 
-  describe('local storage strategy', () => {
-    beforeEach(() => {
-      let config = angular.copy(storageConfig);
-      config.STORAGE_STRATEGY = 'LocalStorageStrategy';
+  beforeEach(() => {
+    dispatcher = new Dispatcher();
 
-      angular.mock.module($provide => {
-        $provide.constant('storageConfig', config);
-        $provide.value('LocalStorageStrategy', LocalStorageStrategy);
-        $provide.factory('taskService', TaskService);
-      });
+    inject(($q, $rootScope) => {
+      q = $q;
+      scope = $rootScope;
+
+      serverService = {
+        create: sinon.stub(),
+        delete: sinon.stub(),
+        update: sinon.stub()
+      };
+
+      taskService = new TaskService(ActionTypes, dispatcher, serverService);
     });
-
-    it('should implement local api', inject(taskService => {
-      expect(taskService).toBe(LocalStorageStrategy);
-    }));
   });
 
 
-  describe('server storage strategy', () => {
-    beforeEach(() => {
-      let config = angular.copy(storageConfig);
-      config.STORAGE_STRATEGY = 'ServerStorageStrategy';
+  describe('Creating a task', () => {
+    it('should call serverService.create', () => {
+      serverService.create.returns(q.resolve());
+      taskService.createTask('test');
 
-      angular.mock.module($provide => {
-        $provide.constant('storageConfig', config);
-        $provide.value('ServerStorageStrategy', ServerStorageStrategy);
-        $provide.factory('taskService', TaskService);
-      });
+      scope.$digest();
+
+      expect(serverService.create.callCount).toBe(1);
     });
 
-    it('should implement server api', inject(taskService => {
-      expect(taskService).toBe(ServerStorageStrategy);
-    }));
+    it('should notify observer', () => {
+      let observer = sinon.spy();
+      let task = {};
+
+      serverService.create.returns(q.resolve(task));
+      dispatcher.subscribe(observer);
+      taskService.createTask('test');
+
+      scope.$digest();
+
+      expect(observer.callCount).toBe(1);
+      expect(observer.args[0][0].type).toBe(ActionTypes.CREATE_TASK);
+      expect(observer.args[0][0].task).toBe(task);
+    });
   });
 
+  describe('Deleting a task', () => {
+    it('should call serverService.delete', () => {
+      let task = {links: {self: '/tasks/123'}};
+      serverService.delete.returns(q.resolve());
+      taskService.deleteTask(task);
+
+      scope.$digest();
+
+      expect(serverService.delete.callCount).toBe(1);
+    });
+
+    it('should notify observer', () => {
+      let observer = sinon.spy();
+      let task = {links: {self: '/tasks/123'}};
+
+      serverService.delete.returns(q.resolve(task));
+      dispatcher.subscribe(observer);
+      taskService.deleteTask(task);
+
+      scope.$digest();
+
+      expect(observer.callCount).toBe(1);
+      expect(observer.args[0][0].type).toBe(ActionTypes.DELETE_TASK);
+      expect(observer.args[0][0].task).toBe(task);
+    });
+  });
+
+  describe('Updating a task', () => {
+    it('should call serverService.update', () => {
+      let task = {links: {self: '/tasks/123'}};
+      serverService.update.returns(q.resolve());
+      taskService.updateTask(task);
+
+      scope.$digest();
+
+      expect(serverService.update.callCount).toBe(1);
+    });
+
+    it('should notify observer', () => {
+      let observer = sinon.spy();
+      let task = {links: {self: '/tasks/123'}};
+
+      serverService.update.returns(q.resolve(task));
+      dispatcher.subscribe(observer);
+      taskService.updateTask(task);
+
+      scope.$digest();
+
+      expect(observer.callCount).toBe(1);
+      expect(observer.args[0][0].type).toBe(ActionTypes.UPDATE_TASK);
+      expect(observer.args[0][0].task).toBe(task);
+    });
+  });
 });
+

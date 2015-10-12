@@ -1,13 +1,13 @@
 import { Inject } from 'app/core/decorators/inject';
 
 
-@Inject('$state', '$stateParams', 'Task')
+@Inject('$state', '$stateParams', 'TaskStatus')
 export class StateService {
-  constructor($state, $stateParams, Task) {
+  constructor($state, $stateParams, TaskStatus) {
     this.state = $state;
     this.params = $stateParams;
-    this.STATUS_ACTIVE = Task.STATUS_ACTIVE;
-    this.STATUS_COMPLETED = Task.STATUS_COMPLETED;
+    this.STATUS_ACTIVE = TaskStatus.ACTIVE;
+    this.STATUS_COMPLETED = TaskStatus.COMPLETED;
   }
 
   /**

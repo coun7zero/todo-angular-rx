@@ -7,8 +7,7 @@ describe('escape directive', () => {
 
 
   beforeEach(() => {
-    angular
-      .module('test', [])
+    angular.module('test', [])
       .directive('escape', escapeDirective);
 
     angular.mock.module('test');
@@ -18,6 +17,7 @@ describe('escape directive', () => {
       scope.escapeHandler = sinon.spy();
 
       element = $compile('<input escape="escapeHandler()" type="text">')(scope);
+
       scope.$digest();
     });
   });

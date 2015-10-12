@@ -6,7 +6,10 @@ __karma__.loaded = function(){};
 // SystemJS configuration.
 System.config({
   baseURL: '/base/target/',
-  defaultJSExtensions: true
+  defaultJSExtensions: true,
+  map: {
+    rx: 'lib/rx.all.min.js'
+  }
 });
 
 

@@ -1,27 +1,21 @@
 root: true
 
-
 parser: babel-eslint
 
-
 extends: eslint:recommended
-
 
 env:
   browser: true
   jasmine: true
   es6: true
 
-
 ecmaFeatures:
   modules: true
-
 
 globals:
   angular: true
   inject: true
   sinon: true
-
 
 rules:
   camelcase: 2
@@ -30,7 +24,7 @@ rules:
   dot-notation: [2, {allowKeywords: true}]
   eol-last: 2
   eqeqeq: 2
-  new-cap: 1
+  new-cap: 0
   new-parens: 2
   no-alert: 2
   no-caller: 2
@@ -48,7 +42,7 @@ rules:
   no-native-reassign: 2
   no-new-func: 2
   no-new-object: 2
-  no-shadow: 1
+  no-shadow: 0
   no-shadow-restricted-names: 2
   no-spaced-func: 2
   no-trailing-spaces: 2

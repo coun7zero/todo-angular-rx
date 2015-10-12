@@ -1,10 +1,11 @@
+import { ActionTypes, Endpoints } from './config/constants';
 import { routerConfig } from './config/router';
-import { storageConfig } from './config/storage';
+import { Dispatcher } from './core/dispatcher/dispatcher';
+import { ServerService } from './core/server/server-service';
 import { StateService } from './core/state/state-service';
-import { LocalStorageStrategy } from './core/task/local-storage-strategy';
-import { ServerStorageStrategy } from './core/task/server-storage-strategy';
-import { Task } from './core/task/task';
+import { Task, TaskStatus } from './core/task/task';
 import { TaskService } from './core/task/task-service';
+import { TaskStore } from './core/task/task-store';
 import { App } from './components/app/app';
 import { TaskForm } from './components/tasks/task-form/task-form';
 import { TaskItem } from './components/tasks/task-item/task-item';
@@ -15,7 +16,6 @@ import { focusDirective } from './directives/focus-directive';
 
 
 let app = angular.module('app', [
-    'angular-storage',
     'ngAria',
     'ui.router',
     'templates'
@@ -25,7 +25,20 @@ let app = angular.module('app', [
   /*===================================
     Constants
   -----------------------------------*/
-  .constant('storageConfig', storageConfig)
+  .constant('ActionTypes', ActionTypes)
+  .constant('Endpoints', Endpoints)
+
+
+  /*===================================
+    Dispatcher
+  -----------------------------------*/
+  .service('Dispatcher', Dispatcher)
+
+
+  /*===================================
+    Server
+  -----------------------------------*/
+  .service('ServerService', ServerService)
 
 
   /*===================================
@@ -39,9 +52,9 @@ let app = angular.module('app', [
     Task
   -----------------------------------*/
   .value('Task', Task)
-  .service('LocalStorageStrategy', LocalStorageStrategy)
-  .service('ServerStorageStrategy', ServerStorageStrategy)
+  .value('TaskStatus', TaskStatus)
   .service('TaskService', TaskService)
+  .service('TaskStore', TaskStore)
 
 
   /*===================================
@@ -74,6 +87,7 @@ let app = angular.module('app', [
   -----------------------------------*/
   .directive('focus', focusDirective)
   .directive('escape', escapeDirective);
+
 
 
 // Bootstrap

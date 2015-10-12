@@ -1,9 +1,12 @@
 export class Task {
-  static STATUS_ACTIVE = 'active';
-  static STATUS_COMPLETED = 'completed';
-
-  constructor(title = '') {
+  constructor(title) {
     this.completed = false;
     this.title = title;
   }
 }
+
+
+export const TaskStatus = {
+  ACTIVE: 'active',
+  COMPLETED: 'completed'
+};

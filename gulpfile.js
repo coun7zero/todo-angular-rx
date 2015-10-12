@@ -27,14 +27,13 @@ var paths = {
     'node_modules/angular/angular.min.js',
     'node_modules/angular-aria/angular-aria.min.js',
     'node_modules/angular-ui-router/release/angular-ui-router.min.js',
-    'node_modules/angular-storage/dist/angular-storage.min.js',
     'node_modules/babel-core/external-helpers.min.js',
     'node_modules/es6-module-loader/dist/es6-module-loader.js',
+    'node_modules/rx/dist/rx.all.{min.js,map}',
     'node_modules/systemjs/dist/system.js'
   ],
 
   src: {
-    assets: 'src/assets/**/*',
     html: 'src/*.html',
     js: 'src/**/*.js',
     sass: 'src/styles/**/*.scss',
@@ -63,7 +62,7 @@ var config = {
     notify: false,
     open: false,
     port: 7000,
-    reloadDelay: 200,
+    reloadDelay: 2000,
     server: {
       baseDir: paths.target
     }
@@ -87,7 +86,7 @@ var config = {
   inject: {
     src: 'target/index.html',
     includes: [
-      'target/main.js'
+      'target/app/main.js'
     ],
     options: {relative: true}
   },
@@ -134,6 +133,11 @@ config.system = {
   babelOptions: config.babel,
   baseURL: 'src',
   defaultJSExtensions: true,
+  meta: {
+    'rx': {
+      build: false
+    }
+  },
   transpiler: 'babel'
 };
 
@@ -236,14 +240,14 @@ gulp.task('sass', function(){
 });
 
 
-gulp.task('server', function(done){
+gulp.task('serve', function(done){
   browserSync
     .create()
     .init(config.browserSync, done);
 });
 
 
-gulp.task('server.api', function(done){
+gulp.task('serve.api', function(done){
   todoServer.start();
   done();
 });
@@ -263,7 +267,6 @@ gulp.task('templates', function(){
 ---------------------------*/
 gulp.task('build', gulp.series(
   'clean.target',
-  'copy.assets',
   'copy.html',
   'copy.lib',
   'sass',
@@ -275,7 +278,7 @@ gulp.task('build', gulp.series(
 /*===========================
   DEVELOP
 ---------------------------*/
-gulp.task('dev', gulp.series('build', 'server', function watch(){
+gulp.task('dev', gulp.series('build', 'serve', function watch(){
   gulp.watch(paths.src.assets, gulp.task('copy.assets'));
   gulp.watch(paths.src.html, gulp.task('copy.html'));
   gulp.watch(paths.src.sass, gulp.task('sass'));
@@ -289,7 +292,10 @@ gulp.task('dev', gulp.series('build', 'server', function watch(){
 ---------------------------*/
 function karmaServer(options, done) {
   var server = new karma.Server(options, function(error){
-    if (error) process.exit(error);
+    if (error) {
+      done();
+      process.exit(error);
+    }
     done();
   });
   server.start();
@@ -297,12 +303,12 @@ function karmaServer(options, done) {
 
 
 gulp.task('karma', function(done){
+  config.karma.singleRun = true;
   karmaServer(config.karma, done);
 });
 
 
-gulp.task('karma.single', function(done){
-  config.karma.singleRun = true;
+gulp.task('karma.watch', function(done){
   karmaServer(config.karma, done);
 });
 
@@ -310,17 +316,15 @@ gulp.task('karma.single', function(done){
 gulp.task('karma.run', function(done){
   var cmd = process.platform === 'win32' ? 'node_modules\\.bin\\karma run karma.conf.js' : 'node node_modules/.bin/karma run karma.conf.js';
   exec(cmd, function(error, stdout){
-    // Ignore errors in the interactive (non-ci) mode.
-    // Karma server will print all test failures.
     done();
   });
 });
 
 
-gulp.task('test', gulp.series('lint', 'build', 'karma.single'));
+gulp.task('test', gulp.series('lint', 'build', 'karma'));
 
 
-gulp.task('test.watch', gulp.parallel(gulp.series('lint', 'build', 'karma'), function(){
+gulp.task('test.watch', gulp.parallel(gulp.series('lint', 'build', 'karma.watch'), function(){
   gulp.watch(paths.src.js, gulp.series('js', 'karma.run'));
 }));
 
@@ -331,7 +335,7 @@ gulp.task('test.watch', gulp.parallel(gulp.series('lint', 'build', 'karma'), fun
 gulp.task('dist', gulp.series(
   'lint',
   'build',
-  'karma.single',
+  'karma',
   'js.bundle',
   'inject',
   'headers'
@@ -341,4 +345,4 @@ gulp.task('dist', gulp.series(
 /*===========================
   RUN
 ---------------------------*/
-gulp.task('default', gulp.series('build', 'server'));
+gulp.task('default', gulp.series('build', 'serve'));
