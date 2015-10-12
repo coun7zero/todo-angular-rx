@@ -1,5 +1,5 @@
 import { routerConfig } from './router';
-import { Task } from 'app/core/task/task';
+import { TaskStatus } from 'app/core/task/task';
 
 
 describe('Router config', () => {
@@ -27,13 +27,13 @@ describe('Router config', () => {
   describe('`app.tasks` state', () => {
     describe('with `filter=active`', () => {
       it('should transition to `app.tasks` state', inject(($rootScope, $state) => {
-        $state.go('app.tasks', {filter: Task.STATUS_ACTIVE});
+        $state.go('app.tasks', {filter: TaskStatus.ACTIVE});
         $rootScope.$digest();
         expect($state.current.name).toBe('app.tasks');
       }));
 
       it('should set param `filter` to `active`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('app.tasks', {filter: Task.STATUS_ACTIVE});
+        $state.go('app.tasks', {filter: TaskStatus.ACTIVE});
         $rootScope.$digest();
         expect($stateParams.filter).toBe('active');
       }));
@@ -41,13 +41,13 @@ describe('Router config', () => {
 
     describe('with `filter=completed`', () => {
       it('should transition to `app.tasks` state', inject(($rootScope, $state) => {
-        $state.go('app.tasks', {filter: Task.STATUS_COMPLETED});
+        $state.go('app.tasks', {filter: TaskStatus.COMPLETED});
         $rootScope.$digest();
         expect($state.current.name).toBe('app.tasks');
       }));
 
       it('should set param `filter` to `completed`', inject(($rootScope, $state, $stateParams) => {
-        $state.go('app.tasks', {filter: Task.STATUS_COMPLETED});
+        $state.go('app.tasks', {filter: TaskStatus.COMPLETED});
         $rootScope.$digest();
         expect($stateParams.filter).toBe('completed');
       }));
