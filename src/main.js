@@ -1,3 +1,10 @@
+import 'babel-core/polyfill';
+import 'styles/styles.scss';
+
+import angular from 'angular';
+import ngAria from 'angular-aria';
+import uiRouter from 'angular-ui-router';
+
 import { ActionTypes, Endpoints } from './config/constants';
 import { routerConfig } from './config/router';
 import { Dispatcher } from './modules/dispatcher/dispatcher';
@@ -16,9 +23,8 @@ import { focusDirective } from './directives/focus-directive';
 
 
 let app = angular.module('app', [
-    'ngAria',
-    'ui.router',
-    'templates'
+    ngAria,
+    uiRouter
   ])
 
 

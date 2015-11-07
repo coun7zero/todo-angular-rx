@@ -1,3 +1,9 @@
+import appTemplate from 'components/app/app.html';
+import taskFormTemplate from 'components/tasks/task-form/task-form.html';
+import taskListTemplate from 'components/tasks/task-list/task-list.html';
+import tasksTemplate from 'components/tasks/tasks.html';
+
+
 export const routerConfig = ['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
   $stateProvider
     .state({
@@ -6,7 +12,7 @@ export const routerConfig = ['$stateProvider', '$urlRouterProvider', ($stateProv
       views: {
         '': {
           controller: 'AppController as app',
-          templateUrl: 'app/app.html'
+          template: appTemplate
         }
       }
     })
@@ -16,17 +22,17 @@ export const routerConfig = ['$stateProvider', '$urlRouterProvider', ($stateProv
       url: '/tasks?filter',
       views: {
         'main@app': {
-          templateUrl: 'tasks/tasks.html'
+          template: tasksTemplate
         },
 
         'form@app.tasks': {
           controller: 'TaskFormController as taskForm',
-          templateUrl: 'tasks/task-form/task-form.html'
+          template: taskFormTemplate
         },
 
         'list@app.tasks': {
           controller: 'TaskListController as taskList',
-          templateUrl: 'tasks/task-list/task-list.html'
+          template: taskListTemplate
         }
       }
     });
