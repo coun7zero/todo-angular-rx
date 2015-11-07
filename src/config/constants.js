@@ -6,5 +6,5 @@ export const ActionTypes = {
 
 
 export const Endpoints = {
-  BASE_URL: 'http://localhost:8000'
+  BASE_URL: 'http://localhost:3000'
 };

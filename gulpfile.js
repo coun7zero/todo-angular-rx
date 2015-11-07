@@ -3,6 +3,7 @@ var del           = require('del'),
     gulp          = require('gulp'),
     gutil         = require('gulp-util'),
     header        = require('gulp-header'),
+    jsonServer    = require('json-server'),
     karma         = require('karma'),
     path          = require('path'),
     webpack       = require('webpack'),
@@ -119,6 +120,20 @@ gulp.task('serve', function(done){
 });
 
 
+gulp.task('serve.api', function(done){
+  var server = jsonServer.create();
+  server.use(jsonServer.defaults());
+  server.use(jsonServer.router('db.json'));
+
+  server.listen(3000, 'localhost', function(){
+    gutil.log(gutil.colors.green('-------------------------------------------'));
+    gutil.log(gutil.colors.green('JSON API Server  listening @ localhost:3000'));
+    gutil.log(gutil.colors.green('-------------------------------------------'));
+    done();
+  });
+});
+
+
 /*===========================
   BUILD
 ---------------------------*/
@@ -131,7 +146,7 @@ gulp.task('build', gulp.series(
 /*===========================
   DEVELOP
 ---------------------------*/
-gulp.task('default', gulp.parallel('serve'));
+gulp.task('default', gulp.parallel('serve', 'serve.api'));
 
 
 /*===========================
