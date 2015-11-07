@@ -4,7 +4,7 @@ import { TaskItem } from './task-item';
 describe('TaskItemController', () => {
   let controller;
   let scope;
-  let taskService;
+  let taskActions;
 
 
   beforeEach(() => {
@@ -12,18 +12,18 @@ describe('TaskItemController', () => {
       scope = $rootScope.$new();
       scope.task = {completed: false, title: 'test'};
 
-      taskService = {
+      taskActions = {
         tasks: [],
         deleteTask: () => { return $q.resolve(); },
         updateTask: () => { return $q.resolve(); }
       };
 
-      sinon.spy(taskService, 'deleteTask');
-      sinon.spy(taskService, 'updateTask');
+      sinon.spy(taskActions, 'deleteTask');
+      sinon.spy(taskActions, 'updateTask');
 
       controller = $controller(TaskItem, {
         $scope: scope,
-        TaskService: taskService
+        TaskActions: taskActions
       });
     });
   });
@@ -86,13 +86,13 @@ describe('TaskItemController', () => {
     it('should delegate to TaskService#deleteTask', () => {
       controller.delete();
       scope.$digest();
-      expect(taskService.deleteTask.callCount).toBe(1);
+      expect(taskActions.deleteTask.callCount).toBe(1);
     });
 
     it('should pass task object to TaskService#deleteTask', () => {
       controller.delete();
       scope.$digest();
-      expect(taskService.deleteTask.calledWith(scope.task)).toBe(true);
+      expect(taskActions.deleteTask.calledWith(scope.task)).toBe(true);
     });
   });
 
@@ -109,7 +109,7 @@ describe('TaskItemController', () => {
       it('should do nothing', () => {
         controller.save();
         scope.$digest();
-        expect(taskService.updateTask.callCount).toBe(0);
+        expect(taskActions.updateTask.callCount).toBe(0);
       });
     });
 
@@ -119,7 +119,7 @@ describe('TaskItemController', () => {
         controller.title = 'foo';
         controller.save();
         scope.$digest();
-        expect(taskService.updateTask.callCount).toBe(1);
+        expect(taskActions.updateTask.callCount).toBe(1);
       });
 
       it('should pass task object to TaskService#updateTask', () => {
@@ -127,7 +127,7 @@ describe('TaskItemController', () => {
         controller.title = 'foo';
         controller.save();
         scope.$digest();
-        expect(taskService.updateTask.calledWith(scope.task)).toBe(true);
+        expect(taskActions.updateTask.calledWith(scope.task)).toBe(true);
       });
     });
 
@@ -137,7 +137,7 @@ describe('TaskItemController', () => {
         controller.title = scope.task.title;
         controller.save();
         scope.$digest();
-        expect(taskService.updateTask.callCount).toBe(0);
+        expect(taskActions.updateTask.callCount).toBe(0);
       });
     });
   });
@@ -146,7 +146,7 @@ describe('TaskItemController', () => {
   describe('Toggling task status', () => {
     it('should delegate to TaskService#updateTask', () => {
       controller.toggleCompleted();
-      expect(taskService.updateTask.callCount).toBe(1);
+      expect(taskActions.updateTask.callCount).toBe(1);
     });
 
     it('should toggle `statusModified` value', () => {

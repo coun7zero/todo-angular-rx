@@ -3,23 +3,23 @@ import { App } from './app';
 
 describe('AppController', () => {
   let controller;
-  let stateService;
+  let routerService;
 
 
   beforeEach(() => {
     inject(($controller) => {
-      stateService = {};
+      routerService = {};
 
       controller = $controller(App, {
-        StateService: stateService
+        RouterService: routerService
       });
     });
   });
 
 
   describe('Initialization', () => {
-    it('should set `controller.state` with stateService', () => {
-      expect(controller.state).toBe(stateService);
+    it('should set `controller.state` with routerService', () => {
+      expect(controller.state).toBe(routerService);
     });
   });
 

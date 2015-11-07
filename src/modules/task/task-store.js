@@ -1,17 +1,17 @@
 import { ReplaySubject } from 'rx';
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
-@Inject('ActionTypes', 'Dispatcher', 'ServerService')
+@Inject('ActionTypes', 'Dispatcher', 'APIService')
 export class TaskStore {
-  constructor(ActionTypes, dispatcher, serverService) {
+  constructor(ActionTypes, dispatcher, api) {
     this._subject = new ReplaySubject(1);
 
     this._registerHandler(dispatcher, ActionTypes.CREATE_TASK, this._created);
     this._registerHandler(dispatcher, ActionTypes.DELETE_TASK, this._deleted);
     this._registerHandler(dispatcher, ActionTypes.UPDATE_TASK, this._updated);
 
-    serverService.get('/tasks')
+    api.get('/tasks')
       .then(tasks => {
         this.tasks = tasks;
         this._emit();

@@ -1,18 +1,18 @@
-import { Inject } from 'app/core/decorators/inject';
-import { Task } from 'app/core/task/task';
+import { Inject } from 'modules/decorators/inject';
+import { Task } from 'modules/task/task';
 
 
-@Inject('ActionTypes', 'Dispatcher', 'ServerService')
-export class TaskService {
-  constructor(ActionTypes, dispatcher, serverService) {
+@Inject('ActionTypes', 'Dispatcher', 'APIService')
+export class TaskActions {
+  constructor(ActionTypes, dispatcher, api) {
     this.actionTypes = ActionTypes;
     this.dispatcher = dispatcher;
-    this.serverService = serverService;
+    this.api = api;
   }
 
   createTask(title) {
     let task = new Task(title);
-    this.serverService.create('/tasks', task)
+    this.api.create('/tasks', task)
       .then(resource => {
         this.dispatcher.onNext({
           type: this.actionTypes.CREATE_TASK,
@@ -22,7 +22,7 @@ export class TaskService {
   }
 
   deleteTask(task) {
-    this.serverService.delete(task.links.self)
+    this.api.delete(task.links.self)
       .then(() => {
         this.dispatcher.onNext({
           type: this.actionTypes.DELETE_TASK,
@@ -32,7 +32,7 @@ export class TaskService {
   }
 
   updateTask(task) {
-    this.serverService.update(task.links.self, task)
+    this.api.update(task.links.self, task)
       .then(resource => {
         this.dispatcher.onNext({
           type: this.actionTypes.UPDATE_TASK,

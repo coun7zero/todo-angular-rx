@@ -1,4 +1,4 @@
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
 @Inject('$scope', 'TaskStore')

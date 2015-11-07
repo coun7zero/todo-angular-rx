@@ -1,10 +1,10 @@
-import { ServerService } from './server-service';
+import { APIService } from './api-service';
 
 
-describe('ServerService', () => {
+describe('APIService', () => {
   let endpoints;
   let httpBackend;
-  let serverService;
+  let apiService;
 
 
   beforeEach(() => {
@@ -15,12 +15,12 @@ describe('ServerService', () => {
 
     angular.mock.module($provide => {
       $provide.value('Endpoints', endpoints);
-      $provide.service('ServerService', ServerService);
+      $provide.service('APIService', APIService);
     });
 
-    inject(($httpBackend, ServerService) => {
+    inject(($httpBackend, APIService) => {
       httpBackend = $httpBackend;
-      serverService = ServerService;
+      apiService = APIService;
     });
   });
 
@@ -34,7 +34,7 @@ describe('ServerService', () => {
   describe('Getting resources', () => {
     it('should send GET request to server', () => {
       httpBackend.expectGET(endpoints.RESOURCE_URL).respond(200, []);
-      serverService.get('/resource');
+      apiService.get('/resource');
       httpBackend.flush();
     });
 
@@ -42,7 +42,7 @@ describe('ServerService', () => {
       let responseData = [{}, {}];
       httpBackend.whenGET(endpoints.RESOURCE_URL).respond(200, responseData);
 
-      serverService.get('/resource')
+      apiService.get('/resource')
         .then(data => {
           expect(data).toEqual(responseData);
         });
@@ -56,7 +56,7 @@ describe('ServerService', () => {
     it('should send POST request to server', () => {
       let resource = {};
       httpBackend.expectPOST(endpoints.RESOURCE_URL, resource).respond(200);
-      serverService.create('/resource', resource);
+      apiService.create('/resource', resource);
       httpBackend.flush();
     });
 
@@ -64,7 +64,7 @@ describe('ServerService', () => {
       let resource = {};
       httpBackend.whenPOST(endpoints.RESOURCE_URL).respond(200, resource);
 
-      serverService.create('/resource', resource)
+      apiService.create('/resource', resource)
         .then(data => {
           expect(data).toEqual(resource);
         });
@@ -77,7 +77,7 @@ describe('ServerService', () => {
   describe('Deleting a resource', () => {
     it('should send DELETE request to server', () => {
       httpBackend.expectDELETE(`${endpoints.RESOURCE_URL}/123`).respond(204);
-      serverService.delete('/resource/123');
+      apiService.delete('/resource/123');
       httpBackend.flush();
     });
   });
@@ -87,7 +87,7 @@ describe('ServerService', () => {
     it('should send PUT request to server', () => {
       let resource = {};
       httpBackend.expectPUT(`${endpoints.RESOURCE_URL}/123`, resource).respond(200);
-      serverService.update('/resource/123', resource);
+      apiService.update('/resource/123', resource);
       httpBackend.flush();
     });
 
@@ -95,7 +95,7 @@ describe('ServerService', () => {
       let resource = {};
       httpBackend.whenPUT(`${endpoints.RESOURCE_URL}/123`, resource).respond(200, resource);
 
-      serverService.update('/resource/123', resource)
+      apiService.update('/resource/123', resource)
         .then(data => {
           expect(data).toEqual(resource);
         });

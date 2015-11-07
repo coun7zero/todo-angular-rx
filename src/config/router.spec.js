@@ -1,5 +1,5 @@
 import { routerConfig } from './router';
-import { TaskStatus } from 'app/core/task/task';
+import { TaskStatus } from 'modules/task/task';
 
 
 describe('Router config', () => {

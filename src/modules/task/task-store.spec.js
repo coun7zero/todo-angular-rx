@@ -1,5 +1,5 @@
-import { ActionTypes } from 'app/config/constants';
-import { Dispatcher } from 'app/core/dispatcher/dispatcher';
+import { ActionTypes } from 'config/constants';
+import { Dispatcher } from 'modules/dispatcher/dispatcher';
 import { TaskStore } from './task-store';
 
 

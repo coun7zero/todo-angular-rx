@@ -1,8 +1,8 @@
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
 @Inject('$state', '$stateParams', 'TaskStatus')
-export class StateService {
+export class RouterService {
   constructor($state, $stateParams, TaskStatus) {
     this.state = $state;
     this.params = $stateParams;

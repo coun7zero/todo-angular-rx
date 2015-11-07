@@ -1,12 +1,12 @@
-import { ActionTypes } from 'app/config/constants';
-import { Dispatcher } from 'app/core/dispatcher/dispatcher';
-import { TaskService } from './task-service';
+import { ActionTypes } from 'config/constants';
+import { Dispatcher } from 'modules/dispatcher/dispatcher';
+import { TaskActions } from './task-actions';
 
 
-describe('TaskService', () => {
+describe('TaskActions', () => {
   let dispatcher;
-  let serverService;
-  let taskService;
+  let apiService;
+  let taskActions;
   let q;
   let scope;
 
@@ -18,34 +18,34 @@ describe('TaskService', () => {
       q = $q;
       scope = $rootScope;
 
-      serverService = {
+      apiService = {
         create: sinon.stub(),
         delete: sinon.stub(),
         update: sinon.stub()
       };
 
-      taskService = new TaskService(ActionTypes, dispatcher, serverService);
+      taskActions = new TaskActions(ActionTypes, dispatcher, apiService);
     });
   });
 
 
   describe('Creating a task', () => {
-    it('should call serverService.create', () => {
-      serverService.create.returns(q.resolve());
-      taskService.createTask('test');
+    it('should call apiService.create', () => {
+      apiService.create.returns(q.resolve());
+      taskActions.createTask('test');
 
       scope.$digest();
 
-      expect(serverService.create.callCount).toBe(1);
+      expect(apiService.create.callCount).toBe(1);
     });
 
     it('should notify observer', () => {
       let observer = sinon.spy();
       let task = {};
 
-      serverService.create.returns(q.resolve(task));
+      apiService.create.returns(q.resolve(task));
       dispatcher.subscribe(observer);
-      taskService.createTask('test');
+      taskActions.createTask('test');
 
       scope.$digest();
 
@@ -56,23 +56,23 @@ describe('TaskService', () => {
   });
 
   describe('Deleting a task', () => {
-    it('should call serverService.delete', () => {
+    it('should call apiService.delete', () => {
       let task = {links: {self: '/tasks/123'}};
-      serverService.delete.returns(q.resolve());
-      taskService.deleteTask(task);
+      apiService.delete.returns(q.resolve());
+      taskActions.deleteTask(task);
 
       scope.$digest();
 
-      expect(serverService.delete.callCount).toBe(1);
+      expect(apiService.delete.callCount).toBe(1);
     });
 
     it('should notify observer', () => {
       let observer = sinon.spy();
       let task = {links: {self: '/tasks/123'}};
 
-      serverService.delete.returns(q.resolve(task));
+      apiService.delete.returns(q.resolve(task));
       dispatcher.subscribe(observer);
-      taskService.deleteTask(task);
+      taskActions.deleteTask(task);
 
       scope.$digest();
 
@@ -83,23 +83,23 @@ describe('TaskService', () => {
   });
 
   describe('Updating a task', () => {
-    it('should call serverService.update', () => {
+    it('should call apiService.update', () => {
       let task = {links: {self: '/tasks/123'}};
-      serverService.update.returns(q.resolve());
-      taskService.updateTask(task);
+      apiService.update.returns(q.resolve());
+      taskActions.updateTask(task);
 
       scope.$digest();
 
-      expect(serverService.update.callCount).toBe(1);
+      expect(apiService.update.callCount).toBe(1);
     });
 
     it('should notify observer', () => {
       let observer = sinon.spy();
       let task = {links: {self: '/tasks/123'}};
 
-      serverService.update.returns(q.resolve(task));
+      apiService.update.returns(q.resolve(task));
       dispatcher.subscribe(observer);
-      taskService.updateTask(task);
+      taskActions.updateTask(task);
 
       scope.$digest();
 

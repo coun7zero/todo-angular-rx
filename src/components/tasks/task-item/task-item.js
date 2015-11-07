@@ -1,11 +1,11 @@
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
-@Inject('$scope', 'TaskService')
+@Inject('$scope', 'TaskActions')
 export class TaskItem {
-  constructor($scope, taskService) {
+  constructor($scope, taskActions) {
     this.scope = $scope;
-    this.taskService = taskService;
+    this.taskActions = taskActions;
     this.editing = false;
     this.statusUpdated = false;
   }
@@ -20,14 +20,14 @@ export class TaskItem {
   }
 
   delete() {
-    this.taskService.deleteTask(this.scope.task);
+    this.taskActions.deleteTask(this.scope.task);
   }
 
   save() {
     if (this.editing) {
       if (this.scope.task.title !== this.title) {
         this.scope.task.title = this.title;
-        this.taskService.updateTask(this.scope.task);
+        this.taskActions.updateTask(this.scope.task);
       }
       this.editing = false;
     }
@@ -35,7 +35,7 @@ export class TaskItem {
 
   toggleCompleted() {
     this.scope.task.completed = !this.scope.task.completed;
-    this.taskService.updateTask(this.scope.task);
+    this.taskActions.updateTask(this.scope.task);
     this.statusUpdated = this.scope.task.completed;
   }
 }

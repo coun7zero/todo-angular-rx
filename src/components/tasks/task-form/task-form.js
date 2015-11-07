@@ -1,11 +1,11 @@
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
-@Inject('$scope', 'TaskService')
+@Inject('$scope', 'TaskActions')
 export class TaskForm {
-  constructor($scope, taskService) {
+  constructor($scope, taskActions) {
     this.scope = $scope;
-    this.taskService = taskService;
+    this.taskActions = taskActions;
     this.setTitle();
   }
 
@@ -15,7 +15,7 @@ export class TaskForm {
 
   submit() {
     if (this.scope.newTaskForm.$valid) {
-      this.taskService.createTask(this.title);
+      this.taskActions.createTask(this.title);
       this.setTitle();
     }
   }

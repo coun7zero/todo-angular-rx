@@ -14,22 +14,22 @@ module.exports = function(config) {
       'node_modules/sinon/pkg/sinon.js',
       'node_modules/systemjs/dist/system.js',
       {pattern: 'target/**/*.js', included: false, watched: false},
-      'src/app/**/*.html',
+      'src/components/**/*.html',
       'karma.loader.js'
     ],
 
     exclude: [
-      'target/app/app.js'
+      'target/app.js'
     ],
 
     preprocessors: {
-      'src/app/**/*.html': ['ng-html2js'],
+      'src/**/*.html': ['ng-html2js'],
       'target/**/*.js': ['sourcemap']
     },
 
     ngHtml2JsPreprocessor: {
       moduleName: 'templates',
-      stripPrefix: 'src/app/components/'
+      stripPrefix: 'src/components/'
     },
 
     reporters: ['dots'],

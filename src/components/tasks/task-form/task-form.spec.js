@@ -4,7 +4,7 @@ import { TaskForm } from './task-form';
 describe('TaskFormController', () => {
   let controller;
   let scope;
-  let taskService;
+  let taskActions;
 
 
   beforeEach(() => {
@@ -12,17 +12,17 @@ describe('TaskFormController', () => {
       scope = $rootScope.$new();
       scope.newTaskForm = {$valid: true};
 
-      taskService = {
+      taskActions = {
         createTask: (task) => {
           return $q.resolve(task);
         }
       };
 
-      sinon.spy(taskService, 'createTask');
+      sinon.spy(taskActions, 'createTask');
 
       controller = $controller(TaskForm, {
         $scope: scope,
-        TaskService: taskService
+        TaskActions: taskActions
       });
     });
   });
@@ -48,7 +48,7 @@ describe('TaskFormController', () => {
       it('should delegate to TaskService#createTask', () => {
         controller.submit();
         scope.$digest();
-        expect(taskService.createTask.callCount).toBe(1);
+        expect(taskActions.createTask.callCount).toBe(1);
       });
 
       it('should pass value of `title` to TaskService#createTask', () => {
@@ -56,7 +56,7 @@ describe('TaskFormController', () => {
         controller.title = title;
         controller.submit();
         scope.$digest();
-        expect(taskService.createTask.calledWith(title)).toBe(true);
+        expect(taskActions.createTask.calledWith(title)).toBe(true);
       });
 
       it('should set `title` with an empty string when create is successful', () => {
@@ -72,7 +72,7 @@ describe('TaskFormController', () => {
         scope.newTaskForm.$valid = false;
         controller.submit();
         scope.$digest();
-        expect(taskService.createTask.callCount).toBe(0);
+        expect(taskActions.createTask.callCount).toBe(0);
       });
     });
   });

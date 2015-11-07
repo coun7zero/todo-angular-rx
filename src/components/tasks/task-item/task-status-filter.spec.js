@@ -1,4 +1,4 @@
-import { TaskStatus } from 'app/core/task/task';
+import { TaskStatus } from 'modules/task/task';
 import { taskStatusFilter } from './task-status-filter';
 
 

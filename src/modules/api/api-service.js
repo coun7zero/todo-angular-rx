@@ -1,8 +1,8 @@
-import { Inject } from 'app/core/decorators/inject';
+import { Inject } from 'modules/decorators/inject';
 
 
 @Inject('$http', 'Endpoints')
-export class ServerService {
+export class APIService {
   constructor($http, Endpoints) {
     this.http = $http;
     this.baseUrl = Endpoints.BASE_URL;

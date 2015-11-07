@@ -37,7 +37,7 @@ var paths = {
     html: 'src/*.html',
     js: 'src/**/*.js',
     sass: 'src/styles/**/*.scss',
-    tpl: 'src/app/components/**/*.html'
+    tpl: 'src/components/**/*.html'
   },
 
   target: 'target'
@@ -112,7 +112,7 @@ var config = {
   },
 
   systemBuilder: {
-    entry: 'app/main.js',
+    entry: 'main.js',
     outfile: paths.target + '/main.js',
     options: {
       minify: true,
