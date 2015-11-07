@@ -1,56 +1,35 @@
-import { Inject } from 'modules/decorators/inject';
+import {
+  TASK_STATUS_ACTIVE,
+  TASK_STATUS_COMPLETED
+} from 'modules/task';
 
 
-@Inject('$state', '$stateParams', 'TaskStatus')
 export class RouterService {
-  constructor($state, $stateParams, TaskStatus) {
+  constructor($state, $stateParams) {
     this.state = $state;
     this.params = $stateParams;
-    this.STATUS_ACTIVE = TaskStatus.ACTIVE;
-    this.STATUS_COMPLETED = TaskStatus.COMPLETED;
   }
 
-  /**
-   * @returns {boolean}
-   */
   isActiveTasks() {
-    return this.state.is('app.tasks', {filter: this.STATUS_ACTIVE});
+    return this.state.is('app.tasks', {filter: TASK_STATUS_ACTIVE});
   }
 
-  /**
-   * @returns {boolean}
-   */
   isCompletedTasks() {
-    return this.state.is('app.tasks', {filter: this.STATUS_COMPLETED});
+    return this.state.is('app.tasks', {filter: TASK_STATUS_COMPLETED});
   }
 
-  /**
-   * @returns {boolean}
-   */
   isTasks() {
     return this.state.is('app.tasks', {filter: ''});
   }
 
-  /**
-   * @async
-   * @returns $state.current
-   */
   toActiveTasks() {
-    return this.state.go('app.tasks', {filter: this.STATUS_ACTIVE});
+    return this.state.go('app.tasks', {filter: TASK_STATUS_ACTIVE});
   }
 
-  /**
-   * @async
-   * @returns $state.current
-   */
   toCompletedTasks() {
-    return this.state.go('app.tasks', {filter: this.STATUS_COMPLETED});
+    return this.state.go('app.tasks', {filter: TASK_STATUS_COMPLETED});
   }
 
-  /**
-   * @async
-   * @returns $state.current
-   */
   toTasks() {
     return this.state.go('app.tasks');
   }

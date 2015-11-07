@@ -1,29 +1,31 @@
-import { Inject } from 'modules/decorators/inject';
+import { API_BASE_URL } from './constants';
 
 
-@Inject('$http', 'Endpoints')
 export class APIService {
-  constructor($http, Endpoints) {
-    this.http = $http;
-    this.baseUrl = Endpoints.BASE_URL;
-  }
+  static $inject = [
+    '$http'
+  ];
 
-  get(path) {
-    return this.http.get(`${this.baseUrl}${path}`)
-      .then(response => response.data);
+  constructor($http) {
+    this.http = $http;
   }
 
   create(path, data) {
-    return this.http.post(`${this.baseUrl}${path}`, data)
+    return this.http.post(`${API_BASE_URL}${path}`, data)
       .then(response => response.data);
   }
 
   delete(path) {
-    return this.http.delete(`${this.baseUrl}${path}`);
+    return this.http.delete(`${API_BASE_URL}${path}`);
+  }
+
+  fetch(path) {
+    return this.http.get(`${API_BASE_URL}${path}`)
+      .then(response => response.data);
   }
 
   update(path, data) {
-    return this.http.put(`${this.baseUrl}${path}`, data)
+    return this.http.put(`${API_BASE_URL}${path}`, data)
       .then(response => response.data);
   }
 }

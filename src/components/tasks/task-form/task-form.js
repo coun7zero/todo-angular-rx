@@ -1,11 +1,26 @@
-import { Inject } from 'modules/decorators/inject';
+import template from './task-form.html';
 
 
-@Inject('$scope', 'TaskActions')
+export function TaskFormDirective() {
+  return {
+    bindToController: {
+      createTask: '&'
+    },
+    controller: 'TaskForm',
+    controllerAs: 'taskForm',
+    restrict: 'E',
+    scope: {},
+    template
+  };
+}
+
 export class TaskForm {
-  constructor($scope, taskActions) {
+  static $inject = [
+    '$scope'
+  ];
+
+  constructor($scope) {
     this.scope = $scope;
-    this.taskActions = taskActions;
     this.setTitle();
   }
 
@@ -13,14 +28,14 @@ export class TaskForm {
     this.setTitle();
   }
 
-  submit() {
-    if (this.scope.newTaskForm.$valid) {
-      this.taskActions.createTask(this.title);
-      this.setTitle();
-    }
-  }
-
   setTitle() {
     this.title = '';
+  }
+
+  submit() {
+    if (this.scope.newTaskForm.$valid) {
+      this.createTask({title: this.title});
+      this.setTitle();
+    }
   }
 }

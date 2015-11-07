@@ -1,9 +1,14 @@
-import { Inject } from 'modules/decorators/inject';
+import template from './app.html';
 
 
-@Inject('RouterService')
-export class App {
-  constructor(routerService) {
-    this.state = routerService;
-  }
+export function AppDirective() {
+  return {
+    controller: 'App',
+    controllerAs: 'app',
+    restrict: 'E',
+    template
+  };
 }
+
+
+export class App {}

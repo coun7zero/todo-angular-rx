@@ -4,9 +4,3 @@ export class Task {
     this.title = title;
   }
 }
-
-
-export const TaskStatus = {
-  ACTIVE: 'active',
-  COMPLETED: 'completed'
-};

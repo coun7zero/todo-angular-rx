@@ -1,11 +1,23 @@
-import { Inject } from 'modules/decorators/inject';
+import template from './task-item.html';
 
 
-@Inject('$scope', 'TaskActions')
+export function TaskItemDirective() {
+  return {
+    bindToController: {
+      model: '=',
+      deleteTask: '&',
+      updateTask: '&'
+    },
+    controller: 'TaskItem',
+    controllerAs: 'taskItem',
+    restrict: 'E',
+    scope: {},
+    template
+  };
+}
+
 export class TaskItem {
-  constructor($scope, taskActions) {
-    this.scope = $scope;
-    this.taskActions = taskActions;
+  constructor() {
     this.editing = false;
     this.statusUpdated = false;
   }
@@ -15,27 +27,27 @@ export class TaskItem {
   }
 
   edit() {
-    this.title = this.scope.task.title;
+    this.title = this.model.title;
     this.editing = true;
   }
 
   delete() {
-    this.taskActions.deleteTask(this.scope.task);
+    this.deleteTask({task: this.model});
   }
 
   save() {
     if (this.editing) {
-      if (this.scope.task.title !== this.title) {
-        this.scope.task.title = this.title;
-        this.taskActions.updateTask(this.scope.task);
+      if (this.model.title !== this.title) {
+        this.model.title = this.title;
+        this.updateTask({task: this.model});
       }
       this.editing = false;
     }
   }
 
   toggleCompleted() {
-    this.scope.task.completed = !this.scope.task.completed;
-    this.taskActions.updateTask(this.scope.task);
-    this.statusUpdated = this.scope.task.completed;
+    this.model.completed = !this.model.completed;
+    this.updateTask({task: this.model});
+    this.statusUpdated = this.model.completed;
   }
 }

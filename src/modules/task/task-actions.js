@@ -1,43 +1,46 @@
-import { Inject } from 'modules/decorators/inject';
-import { Task } from 'modules/task/task';
+import { API_TASKS_PATH } from 'modules/api';
+
+import {
+  CREATE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK
+} from './constants';
+
+import { Task } from './task';
 
 
-@Inject('ActionTypes', 'Dispatcher', 'APIService')
 export class TaskActions {
-  constructor(ActionTypes, dispatcher, api) {
-    this.actionTypes = ActionTypes;
-    this.dispatcher = dispatcher;
+  static $inject = [
+    'APIService',
+    'Dispatcher'
+  ];
+
+  constructor(api, dispatcher) {
     this.api = api;
+    this.dispatcher = dispatcher;
   }
 
   createTask(title) {
-    let task = new Task(title);
-    this.api.create('/tasks', task)
-      .then(resource => {
-        this.dispatcher.onNext({
-          type: this.actionTypes.CREATE_TASK,
-          task: resource
-        });
-      });
+    this.api.create(API_TASKS_PATH, new Task(title))
+      .then(data => this.dispatcher.next({
+        type: CREATE_TASK,
+        payload: data
+      }));
   }
 
   deleteTask(task) {
-    this.api.delete(task.links.self)
-      .then(() => {
-        this.dispatcher.onNext({
-          type: this.actionTypes.DELETE_TASK,
-          task
-        });
-      });
+    this.api.delete(`${API_TASKS_PATH}/${task.id}`)
+      .then(() => this.dispatcher.next({
+        type: DELETE_TASK,
+        payload: task
+      }));
   }
 
   updateTask(task) {
-    this.api.update(task.links.self, task)
-      .then(resource => {
-        this.dispatcher.onNext({
-          type: this.actionTypes.UPDATE_TASK,
-          task: resource
-        });
-      });
+    this.api.update(`${API_TASKS_PATH}/${task.id}`, task)
+      .then(data => this.dispatcher.next({
+        type: UPDATE_TASK,
+        payload: data
+      }));
   }
 }

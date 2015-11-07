@@ -1,46 +1,55 @@
-import { ReplaySubject } from 'rx';
-import { Inject } from 'modules/decorators/inject';
+import { ReplaySubject } from '@reactivex/rxjs/dist/cjs/Rx';
+
+import {
+  CREATE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK
+} from './constants';
 
 
-@Inject('ActionTypes', 'Dispatcher', 'APIService')
 export class TaskStore {
-  constructor(ActionTypes, dispatcher, api) {
-    this._subject = new ReplaySubject(1);
+  static $inject = [
+    'APIService',
+    'Dispatcher'
+  ];
 
-    this._registerHandler(dispatcher, ActionTypes.CREATE_TASK, this._created);
-    this._registerHandler(dispatcher, ActionTypes.DELETE_TASK, this._deleted);
-    this._registerHandler(dispatcher, ActionTypes.UPDATE_TASK, this._updated);
+  constructor(api, dispatcher) {
+    this.emitter = new ReplaySubject(1);
 
-    api.get('/tasks')
-      .then(tasks => {
-        this.tasks = tasks;
-        this._emit();
+    this.registerHandler(dispatcher, CREATE_TASK, this.created);
+    this.registerHandler(dispatcher, DELETE_TASK, this.deleted);
+    this.registerHandler(dispatcher, UPDATE_TASK, this.updated);
+
+    api.fetch('/tasks')
+      .then(data => {
+        this.list = data || [];
+        this.emit();
       });
   }
 
   subscribe(next, error) {
-    return this._subject.subscribe(next, error);
+    return this.emitter.subscribe(next, error);
   }
 
-  _emit() {
-    this._subject.onNext(this.tasks);
+  emit() {
+    this.emitter.next(this.list);
   }
 
-  _created(action) {
-    this.tasks.push(action.task);
-    this._emit();
+  created(action) {
+    this.list.push(action.payload);
+    this.emit();
   }
 
-  _deleted(action) {
-    this.tasks.splice(this.tasks.indexOf(action.task), 1);
-    this._emit();
+  deleted(action) {
+    this.list.splice(this.list.indexOf(action.payload), 1);
+    this.emit();
   }
 
-  _updated() {
-    this._emit();
+  updated(/*action*/) {
+    this.emit();
   }
 
-  _registerHandler(dispatcher, type, handler) {
+  registerHandler(dispatcher, type, handler) {
     return dispatcher
       .filter(action => action.type === type)
       .subscribe(handler.bind(this));

@@ -1,4 +1,4 @@
-import { Subject } from 'rx';
+import { Subject } from '@reactivex/rxjs/dist/cjs/Rx';
 import { Dispatcher } from './dispatcher';
 
 
@@ -9,7 +9,7 @@ describe('Dispatcher', () => {
     });
   });
 
-  it('should be an instance of Rx.Subject', inject(Dispatcher => {
+  it('should be an instance of `Subject`', inject(Dispatcher => {
     expect(Dispatcher instanceof Subject).toBe(true);
   }));
 });

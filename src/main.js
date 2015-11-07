@@ -5,21 +5,19 @@ import angular from 'angular';
 import ngAria from 'angular-aria';
 import uiRouter from 'angular-ui-router';
 
-import { ActionTypes, Endpoints } from './config/constants';
-import { routerConfig } from './config/router';
-import { Dispatcher } from './modules/dispatcher/dispatcher';
-import { APIService } from './modules/api/api-service';
-import { RouterService } from './modules/router/router-service';
-import { Task, TaskStatus } from './modules/task/task';
-import { TaskActions } from './modules/task/task-actions';
-import { TaskStore } from './modules/task/task-store';
-import { App } from './components/app/app';
-import { TaskForm } from './components/tasks/task-form/task-form';
-import { TaskItem } from './components/tasks/task-item/task-item';
-import { taskStatusFilter } from './components/tasks/task-item/task-status-filter';
-import { TaskList } from './components/tasks/task-list/task-list';
+import { App, AppDirective } from 'components/app/app';
+import { Tasks, TasksDirective } from 'components/tasks/tasks';
+import { TaskForm, TaskFormDirective } from 'components/tasks/task-form/task-form';
+import { TaskItem, TaskItemDirective } from 'components/tasks/task-item/task-item';
+import { taskListFilter } from './components/tasks/task-list-filter';
+
 import { escapeDirective } from './directives/escape-directive';
 import { focusDirective } from './directives/focus-directive';
+
+import { APIService } from 'modules/api';
+import { Dispatcher } from 'modules/dispatcher';
+import { routerConfig } from 'modules/router';
+import { TaskActions, TaskStore } from 'modules/task';
 
 
 let app = angular.module('app', [
@@ -27,76 +25,31 @@ let app = angular.module('app', [
     uiRouter
   ])
 
+  .controller('App', App)
+  .directive('app', AppDirective)
 
-  /*===================================
-    Constants
-  -----------------------------------*/
-  .constant('ActionTypes', ActionTypes)
-  .constant('Endpoints', Endpoints)
+  .controller('Tasks', Tasks)
+  .directive('tasks', TasksDirective)
 
+  .controller('TaskForm', TaskForm)
+  .directive('taskForm', TaskFormDirective)
 
-  /*===================================
-    Dispatcher
-  -----------------------------------*/
-  .service('Dispatcher', Dispatcher)
+  .controller('TaskItem', TaskItem)
+  .directive('taskItem', TaskItemDirective)
 
+  .filter('filterTasks', taskListFilter)
 
-  /*===================================
-    Server
-  -----------------------------------*/
+  .directive('escape', escapeDirective)
+  .directive('focus', focusDirective)
+
   .service('APIService', APIService)
-
-
-  /*===================================
-    State (ui-router)
-  -----------------------------------*/
-  .service('RouterService', RouterService)
-  .config(routerConfig)
-
-
-  /*===================================
-    Task
-  -----------------------------------*/
-  .value('Task', Task)
-  .value('TaskStatus', TaskStatus)
+  .service('Dispatcher', Dispatcher)
   .service('TaskActions', TaskActions)
   .service('TaskStore', TaskStore)
 
-
-  /*===================================
-    App component
-  -----------------------------------*/
-  .controller('AppController', App)
+  .config(routerConfig);
 
 
-  /*===================================
-    TaskForm component
-  -----------------------------------*/
-  .controller('TaskFormController', TaskForm)
-
-
-  /*===================================
-    TaskItem component
-  -----------------------------------*/
-  .controller('TaskItemController', TaskItem)
-  .filter('taskStatus', taskStatusFilter)
-
-
-  /*===================================
-    TaskList component
-  -----------------------------------*/
-  .controller('TaskListController', TaskList)
-
-
-  /*===================================
-    Directives
-  -----------------------------------*/
-  .directive('focus', focusDirective)
-  .directive('escape', escapeDirective);
-
-
-
-// Bootstrap
-angular.element(document).ready(function(){
+angular.element(document).ready(() => {
   angular.bootstrap(document, [app.name], {strictDi: true});
 });

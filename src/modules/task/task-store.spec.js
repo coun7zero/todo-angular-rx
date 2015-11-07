@@ -1,13 +1,20 @@
-import { ActionTypes } from 'config/constants';
-import { Dispatcher } from 'modules/dispatcher/dispatcher';
+import { Dispatcher } from 'modules/dispatcher';
+
+import {
+  CREATE_TASK,
+  DELETE_TASK,
+  UPDATE_TASK
+} from './constants';
+
 import { TaskStore } from './task-store';
 
 
 describe('TaskStore', () => {
+  let api;
   let dispatcher;
-  let serverService;
   let scope;
   let store;
+
 
   beforeEach(() => {
     dispatcher = new Dispatcher();
@@ -15,11 +22,11 @@ describe('TaskStore', () => {
     inject(($q, $rootScope) => {
       scope = $rootScope;
 
-      serverService = {
-        get: sinon.stub().returns($q.resolve([]))
+      api = {
+        fetch: sinon.stub().returns($q.resolve([]))
       };
 
-      store = new TaskStore(ActionTypes, dispatcher, serverService);
+      store = new TaskStore(api, dispatcher);
     });
   });
 
@@ -28,23 +35,23 @@ describe('TaskStore', () => {
     it('should get tasks from server', () => {
       scope.$digest();
 
-      expect(serverService.get.callCount).toBe(1);
-      expect(serverService.get.calledWith('/tasks')).toBe(true);
+      expect(api.fetch.callCount).toBe(1);
+      expect(api.fetch.calledWith('/tasks')).toBe(true);
     });
 
     it('should set property `tasks` with response from server', () => {
       scope.$digest();
 
-      expect(Array.isArray(store.tasks)).toBe(true);
+      expect(Array.isArray(store.list)).toBe(true);
     });
 
-    it('should notify observer once tasks are retrieved from server', () => {
-      let observer = sinon.spy();
-      store.subscribe(observer);
+    it('should notify subscriber once tasks are retrieved from server', () => {
+      let subscriber = sinon.spy();
+      store.subscribe(subscriber);
 
       scope.$digest();
 
-      expect(observer.callCount).toBe(1);
+      expect(subscriber.callCount).toBe(1);
     });
   });
 
@@ -54,19 +61,19 @@ describe('TaskStore', () => {
       it('should add task to `tasks` array', () => {
         scope.$digest();
 
-        dispatcher.onNext({type: ActionTypes.CREATE_TASK, task: {}});
+        dispatcher.next({type: CREATE_TASK, payload: {}});
 
-        expect(store.tasks.length).toBe(1);
+        expect(store.list.length).toBe(1);
       });
 
-      it('should notify observer', () => {
+      it('should notify subscriber', () => {
         scope.$digest();
 
-        let observer = sinon.spy();
-        store.subscribe(observer);
-        dispatcher.onNext({type: ActionTypes.CREATE_TASK, task: {}});
+        let subscriber = sinon.spy();
+        store.subscribe(subscriber);
+        dispatcher.next({type: CREATE_TASK, payload: {}});
 
-        expect(observer.callCount).toBe(2); // 2 calls with ReplaySubject(1)
+        expect(subscriber.callCount).toBe(2); // 2 calls with ReplaySubject(1)
       });
     });
 
@@ -75,32 +82,32 @@ describe('TaskStore', () => {
         scope.$digest();
 
         let task = {completed: false, title: 'test-task'};
-        store.tasks.push(task);
-        dispatcher.onNext({type: ActionTypes.DELETE_TASK, task});
+        store.list.push(task);
+        dispatcher.next({type: DELETE_TASK, task});
 
-        expect(store.tasks.length).toBe(0);
+        expect(store.list.length).toBe(0);
       });
 
-      it('should notify observer', () => {
+      it('should notify subscriber', () => {
         scope.$digest();
 
-        let observer = sinon.spy();
-        store.subscribe(observer);
-        dispatcher.onNext({type: ActionTypes.DELETE_TASK, task: {}});
+        let subscriber = sinon.spy();
+        store.subscribe(subscriber);
+        dispatcher.next({type: DELETE_TASK, payload: {}});
 
-        expect(observer.callCount).toBe(2); // 2 calls with ReplaySubject(1)
+        expect(subscriber.callCount).toBe(2); // 2 calls with ReplaySubject(1)
       });
     });
 
     describe('When a task is updated', () => {
-      it('should notify observer', () => {
+      it('should notify subscriber', () => {
         scope.$digest();
 
-        let observer = sinon.spy();
-        store.subscribe(observer);
-        dispatcher.onNext({type: ActionTypes.UPDATE_TASK, task: {}});
+        let subscriber = sinon.spy();
+        store.subscribe(subscriber);
+        dispatcher.next({type: UPDATE_TASK, payload: {}});
 
-        expect(observer.callCount).toBe(2); // 2 calls with ReplaySubject(1)
+        expect(subscriber.callCount).toBe(2); // 2 calls with ReplaySubject(1)
       });
     });
   });
