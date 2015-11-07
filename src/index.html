@@ -5,10 +5,9 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <title>Todo Angular ES6</title>
+  <title>Todo Angular RxJS</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styles.css">
 
   <script src="https://use.typekit.net/kmv5qdr.js"></script>
   <script>try{Typekit.load({ async: true });}catch(e){}</script>
@@ -16,24 +15,5 @@
 
 
 <body ui-view>
-  <script src="lib/angular.min.js"></script>
-  <script src="lib/angular-aria.min.js"></script>
-  <script src="lib/angular-ui-router.min.js"></script>
-  <script src="lib/external-helpers.min.js"></script>
-  <script src="lib/es6-module-loader.js"></script>
-  <script src="lib/system.js"></script>
-  <script src="templates.js"></script>
-  <!-- inject:js -->
-  <!-- endinject -->
-  <script>
-    System.config({
-      defaultJSExtensions: true,
-      map: {
-        rx: 'lib/rx.all.min.js'
-      }
-    });
-
-    System.import('app/main');
-  </script>
 </body>
 </html>
