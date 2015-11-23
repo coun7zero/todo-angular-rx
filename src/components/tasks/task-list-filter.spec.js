@@ -1,6 +1,6 @@
 import 'angular';
 import 'angular-mocks';
-import { TASK_STATUS_ACTIVE, TASK_STATUS_COMPLETED } from 'modules/task';
+import { TASK_STATUS_ACTIVE, TASK_STATUS_COMPLETED } from 'modules/task/constants';
 import { taskListFilter } from './task-list-filter';
 
 

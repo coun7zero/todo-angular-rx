@@ -1,7 +1,7 @@
 import {
   TASK_STATUS_ACTIVE,
   TASK_STATUS_COMPLETED
-} from 'modules/task';
+} from 'modules/task/constants';
 
 
 export function taskListFilter() {
