@@ -1,4 +1,4 @@
-import { TASK_STATUS_ACTIVE, TASK_STATUS_COMPLETED } from 'modules/task';
+import { TASK_STATUS_ACTIVE, TASK_STATUS_COMPLETED } from 'modules/task/constants';
 import { routerConfig } from './router-config';
 import { RouterService } from './router-service';
 

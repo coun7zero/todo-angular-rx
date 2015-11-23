@@ -1,4 +1,4 @@
-import { API_TASKS_PATH } from 'modules/api';
+import { API_TASKS_PATH } from 'modules/api/constants';
 
 import {
   CREATE_TASK,

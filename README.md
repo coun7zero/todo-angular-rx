@@ -4,10 +4,10 @@
 # Todo app with Angular 1.5 and RxJS
 A simple Todo app example utilizing a RxJS `Subject` as a Flux-like dispatcher.
 
-- [Angular](https://github.com/angular/angular.js) `1.5.0-beta.0`
+- [Angular](https://github.com/angular/angular.js) `1.5.0-beta.2`
 - [Angular UI-Router](https://github.com/angular-ui/ui-router) `~0.2.15`
-- [RxJS](https://github.com/ReactiveX/RxJS) `5.0.0-alpha.8`
-- [Babel](https://github.com/babel/babel) `~5.8.33`
+- [RxJS](https://github.com/ReactiveX/RxJS) `5.0.0-alpha.10`
+- [Babel](https://github.com/babel/babel) `~6.2.1`
 - [Gulp](https://github.com/gulpjs/gulp) `4.0.0-alpha.1`
 - [Karma](https://github.com/karma-runner/karma)
 - [JSON-Server](https://github.com/typicode/json-server)
@@ -27,13 +27,6 @@ The gulp tasks for this project require gulp v4-alpha. If you don't wish to glob
 ./node_modules/.bin/gulp run
 ```
 
-## Running the app
-```bash
-gulp run
-```
-Executing `gulp run` will:
-- Build the project
-- Start the server at <a href="http://localhost:7000" target="_blank">localhost:7000</a>
 
 ## Developing
 ```bash
@@ -44,6 +37,7 @@ Executing the default `gulp` command will:
 - Start the server at <a href="http://localhost:7000" target="_blank">localhost:7000</a>
 - Watch for changes to the source files and process changes
 - Live-reload the browser
+
 
 ## Testing
 ```bash

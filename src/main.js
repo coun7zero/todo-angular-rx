@@ -1,4 +1,4 @@
-import 'babel-core/polyfill';
+import 'babel-polyfill';
 import 'styles/styles.scss';
 
 import angular from 'angular';
@@ -9,15 +9,16 @@ import { App, AppDirective } from 'components/app/app';
 import { Tasks, TasksDirective } from 'components/tasks/tasks';
 import { TaskForm, TaskFormDirective } from 'components/tasks/task-form/task-form';
 import { TaskItem, TaskItemDirective } from 'components/tasks/task-item/task-item';
-import { taskListFilter } from './components/tasks/task-list-filter';
+import { taskListFilter } from 'components/tasks/task-list-filter';
 
-import { escapeDirective } from './directives/escape-directive';
-import { focusDirective } from './directives/focus-directive';
+import { escapeDirective } from 'directives/escape-directive';
+import { focusDirective } from 'directives/focus-directive';
 
-import { APIService } from 'modules/api';
-import { Dispatcher } from 'modules/dispatcher';
-import { routerConfig } from 'modules/router';
-import { TaskActions, TaskStore } from 'modules/task';
+import { APIService } from 'modules/api/api-service';
+import { Dispatcher } from 'modules/dispatcher/dispatcher';
+import { routerConfig } from 'modules/router/router-config';
+import { TaskActions } from 'modules/task/task-actions';
+import { TaskStore } from 'modules/task/task-store';
 
 
 let app = angular.module('app', [

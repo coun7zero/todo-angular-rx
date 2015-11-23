@@ -1,4 +1,4 @@
-import { Dispatcher } from 'modules/dispatcher';
+import { Dispatcher } from 'modules/dispatcher/dispatcher';
 
 import {
   CREATE_TASK,
