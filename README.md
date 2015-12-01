@@ -8,7 +8,7 @@ A simple Todo app example utilizing a RxJS `Subject` as a Flux-like dispatcher.
 - [Angular UI-Router](https://github.com/angular-ui/ui-router) `~0.2.15`
 - [RxJS](https://github.com/ReactiveX/RxJS) `5.0.0-alpha.10`
 - [Babel](https://github.com/babel/babel) `~6.2.1`
-- [Gulp](https://github.com/gulpjs/gulp) `4.0.0-alpha.1`
+- [Gulp](https://github.com/gulpjs/gulp) `4.0.0-alpha.2`
 - [Karma](https://github.com/karma-runner/karma)
 - [JSON-Server](https://github.com/typicode/json-server)
 - [Webpack](https://github.com/webpack/webpack)
