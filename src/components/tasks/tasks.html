@@ -5,9 +5,9 @@
 
   <div class="g-col">
     <ul class="task-filters">
-      <li><a ui-sref-active-eq="active" ui-sref="app.tasks({filter: ''})">View All</a></li>
-      <li><a ui-sref-active="active" ui-sref="app.tasks({filter: 'active'})">Active</a></li>
-      <li><a ui-sref-active="active" ui-sref="app.tasks({filter: 'completed'})">Completed</a></li>
+      <li><a ng-class="{'active': tasks.selectedFilter === undefined}" ui-sref="app.tasks({filter: ''})" ui-sref-opts="{reload: false, notify: false}">View All</a></li>
+      <li><a ng-class="{'active': tasks.selectedFilter === 'active'}" ui-sref="app.tasks({filter: 'active'})" ui-sref-opts="{reload: false, notify: false}">Active</a></li>
+      <li><a ng-class="{'active': tasks.selectedFilter === 'completed'}" ui-sref="app.tasks({filter: 'completed'})" ui-sref-opts="{reload: false, notify: false}" >Completed</a></li>
     </ul>
   </div>
 

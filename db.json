@@ -1,9 +1,39 @@
 {
   "tasks": [
     {
-      "completed": false,
+      "completed": true,
       "title": "Todo: Angular RxJS",
       "id": 0
+    },
+    {
+      "completed": false,
+      "title": "siemanko21",
+      "id": 1
+    },
+    {
+      "completed": false,
+      "title": "saasas123",
+      "id": 2
+    },
+    {
+      "completed": false,
+      "title": 12112,
+      "id": 3
+    },
+    {
+      "completed": true,
+      "title": "sdasdasdasd",
+      "id": 4
+    },
+    {
+      "completed": true,
+      "title": "1212121223,,",
+      "id": 5
+    },
+    {
+      "completed": false,
+      "title": "śmierć",
+      "id": 6
     }
   ]
 }

@@ -1,5 +1,7 @@
 import template from './tasks.html';
+import { RouterDispatcher } from '../../modules/router/router-dispatcher.js';
 
+export let tasksParams = {}
 
 export function TasksDirective() {
   return {
@@ -14,19 +16,22 @@ export function TasksDirective() {
 export class Tasks {
   static $inject = [
     '$scope',
-    '$stateParams',
     'TaskActions',
     'TaskStore'
   ];
 
-  constructor($scope, $stateParams, taskActions, taskStore) {
+  constructor($scope, taskActions, taskStore) {
+    const that = this;
     const subscription = taskStore.subscribe(list => this.list = list);
+    const router =  RouterDispatcher.subscribe(function(params){
+      tasksParams.filter = params.filter;
+      that.selectedFilter = tasksParams.filter;
+    });
 
     $scope.$on('$destroy', () => {
       subscription.unsubscribe();
     });
 
     this.actions = taskActions;
-    this.selectedFilter = $stateParams.filter;
   }
 }

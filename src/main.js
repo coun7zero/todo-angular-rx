@@ -16,6 +16,7 @@ import { focusDirective } from 'directives/focus-directive';
 
 import { APIService } from 'modules/api/api-service';
 import { Dispatcher } from 'modules/dispatcher/dispatcher';
+import { RouterDispatcher } from 'modules/router/router-dispatcher';
 import { routerConfig } from 'modules/router/router-config';
 import { TaskActions } from 'modules/task/task-actions';
 import { TaskStore } from 'modules/task/task-store';
@@ -45,6 +46,9 @@ let app = angular.module('app', [
 
   .service('APIService', APIService)
   .service('Dispatcher', Dispatcher)
+
+  // .service('RouterDispatcher', RouterDispatcher)
+
   .service('TaskActions', TaskActions)
   .service('TaskStore', TaskStore)
 
